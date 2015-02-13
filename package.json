@@ -1,0 +1,18 @@
+{
+  "name": "github-leaderboard",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Github Leaderboard",
+  "repository": "https://github.com/eugef/github-leaderboard",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^0.6.1",
+    "bower": "^1.3.1"
+  },
+  "scripts": {
+    "postinstall": "bower install",
+
+    "prestart": "npm install",
+    "start": "http-server -a localhost -p 8000 -c-1"
+  }
+}

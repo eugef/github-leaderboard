@@ -1,0 +1,16 @@
+{
+  "name": "github-leaderboard",
+  "description": "Github Leaderboard",
+  "version": "0.0.0",
+  "homepage": "https://github.com/eugef/github-leaderboard",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "1.2.x",
+    "angular-route": "1.2.x",
+    "angular-loader": "1.2.x",
+    "angular-bootstrap": "~0.12",
+    "bootstrap": "3.1.x",
+    "angular-order-object-by": "~1.1.0"
+  }
+}

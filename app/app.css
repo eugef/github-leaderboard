@@ -1,0 +1,7 @@
+.nav, .pagination, .carousel, .panel-title a {
+    cursor: pointer;
+}
+
+.leaderboard .avatar {
+    height: 48px;
+}

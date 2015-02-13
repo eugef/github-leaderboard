@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Github Leaderboard</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="app.css">
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Github Leaderboard</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#/">Contributors</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="https://github.com/eugef/github-leaderboard" target="_blank">Project on Github</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section class="content">
+    <div class="container">
+        <div ng-view></div>
+    </div>
+</section>
+
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/angular-order-object-by/src/ng-order-object-by.js"></script>
+
+<script src="app.js"></script>
+<script src="config.js"></script>
+<script src="components/github/github.js"></script>
+<script src="leaderboard/leaderboard.js"></script>
+<script src="components/models/contributor.js"></script>
+<script src="components/models/contributors-leaderboard.js"></script>
+</body>
+</html>
