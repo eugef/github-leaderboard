@@ -1,7 +1,0 @@
-{
-  "auth_token": "AUTH_TOKEN",
-  "repositories" : [
-    "USER/PROJECT1",
-    "USER/PROJECT2"
-  ]
-}
