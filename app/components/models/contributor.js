@@ -37,7 +37,7 @@ angular.module('myApp.model.contributor', [])
                 this.totalCommits = {};
 
                 /**
-                 * @type {Object.<String,Number>}
+                 * @type {Object.<String,Object>}
                  */
                 this.points = {};
 
@@ -60,7 +60,7 @@ angular.module('myApp.model.contributor', [])
                     this.totalPoints = 0;
                     
                     for (var project in this.commitments) {
-                        this.totalPoints += this.points[project];
+                        this.totalPoints += this.points[project].points;
                     }
                 };
 
@@ -68,10 +68,13 @@ angular.module('myApp.model.contributor', [])
                  * @param {String} project
                  */
                 this.calculatePoints = function(project) {
-                    this.points[project] = 0;
+                    this.points[project] = {
+                        project: project,
+                        points: 0
+                    };
                     
                     for (var week in this.commitments[project]) {
-                        this.points[project] += commitmentPoints(this.commitments[project][week]);
+                        this.points[project].points += commitmentPoints(this.commitments[project][week]);
                     }
 
                     this.calculateTotalPoints();
