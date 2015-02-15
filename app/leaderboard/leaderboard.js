@@ -9,18 +9,6 @@ angular.module('myApp.leaderboard', ['ngRoute'])
         });
     }])
 
-    .filter('toDictionaryArray', function () {
-        return function (obj) {
-            if (!(obj instanceof Object)) return obj;
-
-            var arr = [];
-            for (var key in obj) {
-                arr.push({ key: key, value: obj[key] });
-            }
-            return arr;
-        }
-    })
-
     .controller('LeaderboardCtrl', ['$scope', 'Github', 'config', 'ContributorLeaderboardModel',
         function ($scope, Github, config, ContributorLeaderboard) {
             $scope.leaderboard = {};
@@ -52,7 +40,7 @@ angular.module('myApp.leaderboard', ['ngRoute'])
                             }
                         }
                         
-                        contributor.calculateRanks(project);
+                        contributor.calculatePoints(project);
                     }
 
 

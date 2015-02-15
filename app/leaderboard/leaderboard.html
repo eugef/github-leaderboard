@@ -1,9 +1,9 @@
 <div class="leaderboard">
-    <div class="row" ng-repeat="contributor in leaderboard | orderObjectBy:'totalRank':true | filter:greaterThan('totalRank', 0)">
+    <div class="row" ng-repeat="contributor in leaderboard | orderObjectBy:'totalPoints':true | filter:greaterThan('totalPoints', 0)">
         <div class="col-md-1">{{ $index+1 }}</div>
         <div class="col-md-1"><img src ng-src="{{ contributor.profile.avatar_url }}" class="avatar img-circle"></div>
         <div class="col-md-3"><h3>{{ contributor.profile.login }}</h3></div>
-        <div class="col-md-1"><h3>{{ contributor.totalRank }}</h3></div>
+        <div class="col-md-1"><h3>{{ contributor.totalPoints }}</h3></div>
     </div>
 </div>
 

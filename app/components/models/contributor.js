@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('myApp.model.contributor', [])
-    .factory('ContributorModel', [
-        function () {
+    .factory('ContributorModel', ['config',
+        function (config) {
 
             /**
              * @constructor
@@ -39,40 +39,42 @@ angular.module('myApp.model.contributor', [])
                 /**
                  * @type {Object.<String,Number>}
                  */
-                this.ranks = {};
+                this.points = {};
 
                 /**
                  * @type {Number}
                  */
-                this.totalRank = 0;
+                this.totalPoints = 0;
 
                 /**
-                 * Calculates commitment rank based on amount of commits
+                 * Calculates commitment points based on amount of commits, additions anddeletions
                  * @param {Commitment} commitment
                  */
-                var commitmentRank = function(commitment) {
-                    return commitment.commit;// * 1000 + commitment.add + commitment.delete;
+                var commitmentPoints = function(commitment) {
+                    return commitment.commit + 
+                        Math.floor(commitment.add / config.commitment_average_add) + 
+                        Math.floor(commitment.delete / config.commitment_average_delete);
                 };
                 
-                this.calculateTotalRank = function() {
-                    this.totalRank = 0;
+                this.calculateTotalPoints = function() {
+                    this.totalPoints = 0;
                     
                     for (var project in this.commitments) {
-                        this.totalRank += this.ranks[project];
+                        this.totalPoints += this.points[project];
                     }
                 };
 
                 /**
                  * @param {String} project
                  */
-                this.calculateRanks = function(project) {
-                    this.ranks[project] = 0;
+                this.calculatePoints = function(project) {
+                    this.points[project] = 0;
                     
                     for (var week in this.commitments[project]) {
-                        this.ranks[project] += commitmentRank(this.commitments[project][week]);
+                        this.points[project] += commitmentPoints(this.commitments[project][week]);
                     }
 
-                    this.calculateTotalRank();
+                    this.calculateTotalPoints();
                 };
                 
                 /**
