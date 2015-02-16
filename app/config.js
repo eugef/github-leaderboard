@@ -2,7 +2,7 @@
 
 angular.module('myApp.config', [])
     .constant('config', {
-        'auth_token': '068002e2f08395cd67bef11262eaa2dbd9709f71',
+        'auth_token': 'OAUTH_TOKEN',
         'projects': [
             'user/project'
         ],
