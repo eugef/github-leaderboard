@@ -23,12 +23,16 @@ angular.module('myApp.leaderboard', ['ngRoute'])
             
             var contributorsLeaderboard = new ContributorLeaderboard();
 
+            function offsetDay(offset) {
+                return moment().day(offset).hour(0).minute(0).second(0).utcOffset(0).format('X');
+            }
+            
             function startOfTheWeek(weekOffset) {
-                return moment().day(-7 * weekOffset).hour(0).minute(0).second(0).utcOffset(0).format('X');
+                return offsetDay(-7 * weekOffset);
             }
 
             function endOfTheWeek() {
-                return moment().day(6).hour(23).minute(59).second(59).utcOffset(0).format('X');
+                return offsetDay(6);
             }
 
             function loadProjectContributors(project) {
