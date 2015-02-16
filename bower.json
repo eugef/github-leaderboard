@@ -11,6 +11,7 @@
     "angular-loader": "1.2.x",
     "angular-bootstrap": "~0.12",
     "bootstrap": "3.1.x",
-    "angular-order-object-by": "~1.1.0"
+    "angular-order-object-by": "~1.1.0",
+    "moment": "~2.9.0"
   }
 }

@@ -51,9 +51,9 @@ angular.module('myApp.model.contributor', [])
                  * @param {Commitment} commitment
                  */
                 var commitmentPoints = function(commitment) {
-                    return commitment.commit + 
+                    return commitment.commit/* +
                         Math.floor(commitment.add / config.commitment_average_add) + 
-                        Math.floor(commitment.delete / config.commitment_average_delete);
+                        Math.floor(commitment.delete / config.commitment_average_delete)*/;
                 };
                 
                 this.calculateTotalPoints = function() {
