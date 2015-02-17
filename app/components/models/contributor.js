@@ -32,11 +32,6 @@ angular.module('myApp.model.contributor', [])
                 this.commitments = {};
 
                 /**
-                 * @type {Object.<String,Number>}
-                 */
-                this.totalCommits = {};
-
-                /**
                  * @type {Object.<String,Object>}
                  */
                 this.points = {};
@@ -51,9 +46,9 @@ angular.module('myApp.model.contributor', [])
                  * @param {Commitment} commitment
                  */
                 var commitmentPoints = function(commitment) {
-                    return commitment.commit/* +
+                    return commitment.commit +
                         Math.floor(commitment.add / config.commitment_average_add) + 
-                        Math.floor(commitment.delete / config.commitment_average_delete)*/;
+                        Math.floor(commitment.delete / config.commitment_average_delete);
                 };
                 
                 this.calculateTotalPoints = function() {
@@ -92,13 +87,12 @@ angular.module('myApp.model.contributor', [])
                     
                     this.commitments[project][week] = commitment;
                 };
-                
+
                 /**
                  * @param {String} project
-                 * @param {Number} total
                  */
-                this.addTotal = function(project, total) {
-                    this.totalCommits[project] = total;
+                this.clearCommitment = function(project) {
+                    this.commitments[project] = {}
                 }
             }
 

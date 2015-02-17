@@ -5,3 +5,7 @@
 .leaderboard .avatar {
     height: 48px;
 }
+
+.leaderboard .range-row {
+    margin-bottom: 20px;
+}

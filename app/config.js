@@ -6,9 +6,6 @@ angular.module('myApp.config', [])
         'projects': [
             'user/project'
         ],
-        
-        // Number of weeks to use in calculations
-        'commitment_weeks': 4,
 
         // Average amount of additions/deletions per commit
         'commitment_average_add': 60,

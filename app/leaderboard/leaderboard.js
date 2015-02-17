@@ -11,7 +11,10 @@ angular.module('myApp.leaderboard', ['ngRoute'])
 
     .controller('LeaderboardCtrl', ['$scope', 'Github', 'config', 'ContributorLeaderboardModel',
         function ($scope, Github, config, ContributorLeaderboard) {
+            var contributorsLeaderboard = new ContributorLeaderboard();
+
             $scope.leaderboard = {};
+            $scope.weeksOffset = 1;
             $scope.startWeek = null;
             $scope.endWeek = null;
 
@@ -20,8 +23,23 @@ angular.module('myApp.leaderboard', ['ngRoute'])
                     if (item[prop] > val) return true;
                 }
             };
-            
-            var contributorsLeaderboard = new ContributorLeaderboard();
+
+            $scope.setRange = function(weeksOffset) {
+                if ($scope.weeksOffset != weeksOffset) {
+                    $scope.weeksOffset = weeksOffset;
+                    $scope.updateLeaderboard();
+                }
+            };
+
+            $scope.isRange = function(weeksOffset) {
+                return $scope.weeksOffset == weeksOffset;
+            };
+
+            $scope.updateLeaderboard = function() {
+                for (var i = 0; i < config.projects.length; i++) {
+                    loadProjectContributors(config.projects[i], $scope.weeksOffset);
+                }
+            };
 
             function offsetDay(offset) {
                 return moment().day(offset).hour(0).minute(0).second(0).utcOffset(0).format('X');
@@ -35,8 +53,8 @@ angular.module('myApp.leaderboard', ['ngRoute'])
                 return offsetDay(6);
             }
 
-            function loadProjectContributors(project) {
-                var startWeek = startOfTheWeek(config.commitment_weeks - 1);
+            function loadProjectContributors(project, weeksOffset) {
+                var startWeek = startOfTheWeek(weeksOffset);
                 var endWeek = endOfTheWeek();
                 $scope.startWeek = startWeek * 1000;
                 $scope.endWeek = endWeek * 1000;
@@ -46,7 +64,7 @@ angular.module('myApp.leaderboard', ['ngRoute'])
 
                     for (var c = 0; c < data.length; c++) {
                         var contributor = contributorsLeaderboard.contributor(data[c].author);
-                        contributor.addTotal(project, data[c].total);
+                        contributor.clearCommitment(project);
 
                         if (data[c].weeks) {
                             var weekData = data[c].weeks;
@@ -71,9 +89,7 @@ angular.module('myApp.leaderboard', ['ngRoute'])
                     console.log($scope.leaderboard);
                 });
             }
-            
-            for (var i = 0; i < config.projects.length; i++) {
-                loadProjectContributors(config.projects[i]);
-            }
+
+            $scope.updateLeaderboard();
         }
     ]);
