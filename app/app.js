@@ -8,9 +8,12 @@ angular.module('myApp', [
     'angular-data.DSCacheFactory',
     'myApp.config',
     'myApp.github',
-    'myApp.leaderboard',
     'myApp.model.contributor',
-    'myApp.model.contributorsLeaderboard'
+    'myApp.model.contributorsLeaderboard',
+    'myApp.model.project',
+    'myApp.model.projectsLeaderboard',
+    'myApp.leaderboard',
+    'myApp.projects'
 ]).
 
     config(['$routeProvider', function ($routeProvider) {

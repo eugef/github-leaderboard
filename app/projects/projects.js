@@ -1,17 +1,17 @@
 'use strict';
 
-angular.module('myApp.leaderboard', ['ngRoute'])
+angular.module('myApp.projects', ['ngRoute'])
 
     .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/leaderboard', {
-            templateUrl: 'leaderboard/leaderboard.html',
-            controller: 'LeaderboardCtrl'
+        $routeProvider.when('/projects', {
+            templateUrl: 'projects/projects.html',
+            controller: 'ProjectsCtrl'
         });
     }])
 
-    .controller('LeaderboardCtrl', ['$scope', 'Github', 'config', 'ContributorsLeaderboardModel',
-        function ($scope, Github, config, ContributorsLeaderboard) {
-            var contributorsLeaderboard = new ContributorsLeaderboard();
+    .controller('ProjectsCtrl', ['$scope', 'Github', 'config', 'ProjectsLeaderboardModel',
+        function ($scope, Github, config, ProjectsLeaderboard) {
+            var projectsLeaderboard = new ProjectsLeaderboard();
 
             $scope.leaderboard = {};
             $scope.weeksOffset = 1;
@@ -49,7 +49,7 @@ angular.module('myApp.leaderboard', ['ngRoute'])
             function offsetDay(offset) {
                 return moment().day(offset).hour(0).minute(0).second(0).utcOffset(0).format('X');
             }
-            
+
             function startOfTheWeek(weekOffset) {
                 return offsetDay(-7 * weekOffset);
             }
@@ -58,22 +58,25 @@ angular.module('myApp.leaderboard', ['ngRoute'])
                 return offsetDay(6);
             }
 
-            function loadProjectContributors(project, weeksOffset, forceUpdate) {
+            function loadProjectContributors(projectName, weeksOffset, forceUpdate) {
                 var startWeek = startOfTheWeek(weeksOffset);
                 var endWeek = endOfTheWeek();
                 $scope.startWeek = startWeek * 1000;
                 $scope.endWeek = endWeek * 1000;
 
-                Github.contributors(project, forceUpdate).then(function(data) {
+                Github.contributors(projectName, forceUpdate).then(function(data) {
+                    var project = projectsLeaderboard.project(projectName);
+                                        
                     for (var c = 0; c < data.length; c++) {
-                        var contributor = contributorsLeaderboard.contributor(data[c].author);
-                        contributor.clearCommitment(project);
-
+                        var contributor = data[c].author.login;
+                        project.clearCommitment(contributor);
+                        
                         if (data[c].weeks) {
                             var weekData = data[c].weeks;
+                            
                             for (var w = weekData.length - 1; w >= 0; w--) {
                                 if (weekData[w].w >= startWeek) {
-                                    contributor.addCommitment(project, weekData[w].w, {
+                                    project.addCommitment(contributor, weekData[w].w, {
                                         add: weekData[w].a,
                                         delete: weekData[w].d,
                                         commit: weekData[w].c
@@ -83,12 +86,11 @@ angular.module('myApp.leaderboard', ['ngRoute'])
                                 }
                             }
                         }
-                        
-                        contributor.calculatePoints(project);
+
+                        project.calculatePoints(contributor);
                     }
 
-
-                    $scope.leaderboard = contributorsLeaderboard.contributors();
+                    $scope.leaderboard = projectsLeaderboard.projects();
                 });
             }
 

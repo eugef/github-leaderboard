@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('myApp.model.contributorsLeaderboard', [])
-    .factory('ContributorLeaderboardModel', ['ContributorModel',
+    .factory('ContributorsLeaderboardModel', ['ContributorModel',
         function (Contributor) {
 
             /**
