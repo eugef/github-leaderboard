@@ -1,9 +1,14 @@
 <div class="leaderboard">
     <div class="row range-row">
+        <div class="col-md-1">
+            <ul class="nav nav-pills">
+                <li><a href ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span></a></li>
+            </ul>
+        </div>
         <div class="col-md-3">
             <h4>{{ startWeek | date:'dd MMM yyyy' }} - {{ endWeek | date:'dd MMM yyyy' }}</h4>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-8">
             <ul class="nav nav-pills">
                 <li ng-class="{active: isRange(0)}"><a href ng-click="setRange(0)">This week</a></li>
                 <li ng-class="{active: isRange(1)}"><a href ng-click="setRange(1)">2 weeks</a></li>

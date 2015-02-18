@@ -1,6 +1,5 @@
-angular.module('myApp.github', [])
-    .factory('Github', ['$q', '$http', 'config',
-    function ($q, $http, config) {
+angular.module('myApp.github', []).factory('Github', ['$q', '$http', 'DSCacheFactory', 'config',
+    function ($q, $http, DSCacheFactory, config) {
         "use strict";
 
         /**
@@ -10,19 +9,37 @@ angular.module('myApp.github', [])
          */
         function GithubAPI(config) {
 
+            /**
+             * @type {String}
+             */
             var apiUri = 'https://api.github.com';
-            
+
+            /**
+             * @type {Number}
+             */
             var retryTimeout = 1000;
 
             /**
+             * @type {DSCache}
+             */
+            var cache = DSCacheFactory('githubAPICache', {
+                    maxAge: 15 * 60 * 1000,
+                    deleteOnExpire: 'aggressive'
+                }
+            );
+
+            /**
              * @param {String} project
+             * @param {Boolean} forceUpdate
              * @returns {Promise}
              */
-            this.contributors = function (project) {
-                var request = $q.defer();
+            this.contributors = function (project, forceUpdate) {
+                if (forceUpdate) {
+                    cache.removeAll();
+                }
 
                 function doRequest() {
-                    console.log('doRequest with ' + project);
+                    console.log(project, 'do request');
                     $http.get(
                         apiUri + '/repos/' + project + '/stats/contributors',
                         {
@@ -32,26 +49,33 @@ angular.module('myApp.github', [])
                             }
                         }
                     ).then(
-                        function(response) {
-                            console.log(response.status);
+                        function (response) {
                             if (response.status == '202') {
-                                console.log('retry in ' + retryTimeout + ' with ' + project);
+                                console.log(project, 'retry in ' + retryTimeout);
                                 setTimeout(
                                     function() {
-                                        doRequest(project);
+                                        doRequest();
                                     },
                                     retryTimeout
                                 )
                             } else {
-                                console.log('return result for ' + project);
+                                console.log(project, 'return result');
+                                cache.put(project, response.data);
                                 request.resolve(response.data);
                             }
                         }
                     );
                 }
 
-                doRequest();
-                
+                var request = $q.defer();
+
+                if (cache.info(project)) {
+                    console.log(project, 'cached result');
+                    request.resolve(cache.get(project));
+                } else {
+                    doRequest();
+                }
+
                 return request.promise;
             };
         }

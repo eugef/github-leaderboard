@@ -5,6 +5,7 @@ angular.module('myApp', [
     'ngRoute',
     'ngOrderObjectBy',
     'ui.bootstrap',
+    'angular-data.DSCacheFactory',
     'myApp.config',
     'myApp.github',
     'myApp.leaderboard',

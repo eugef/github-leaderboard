@@ -24,6 +24,10 @@ angular.module('myApp.leaderboard', ['ngRoute'])
                 }
             };
 
+            $scope.refresh = function() {
+                $scope.updateLeaderboard(true);
+            };
+
             $scope.setRange = function(weeksOffset) {
                 if ($scope.weeksOffset != weeksOffset) {
                     $scope.weeksOffset = weeksOffset;
@@ -35,9 +39,10 @@ angular.module('myApp.leaderboard', ['ngRoute'])
                 return $scope.weeksOffset == weeksOffset;
             };
 
-            $scope.updateLeaderboard = function() {
+            $scope.updateLeaderboard = function(forceUpdate) {
+                forceUpdate = forceUpdate || false;
                 for (var i = 0; i < config.projects.length; i++) {
-                    loadProjectContributors(config.projects[i], $scope.weeksOffset);
+                    loadProjectContributors(config.projects[i], $scope.weeksOffset, forceUpdate);
                 }
             };
 
@@ -53,15 +58,13 @@ angular.module('myApp.leaderboard', ['ngRoute'])
                 return offsetDay(6);
             }
 
-            function loadProjectContributors(project, weeksOffset) {
+            function loadProjectContributors(project, weeksOffset, forceUpdate) {
                 var startWeek = startOfTheWeek(weeksOffset);
                 var endWeek = endOfTheWeek();
                 $scope.startWeek = startWeek * 1000;
                 $scope.endWeek = endWeek * 1000;
 
-                Github.contributors(project).then(function(data) {
-                    console.log(project, data);
-
+                Github.contributors(project, forceUpdate).then(function(data) {
                     for (var c = 0; c < data.length; c++) {
                         var contributor = contributorsLeaderboard.contributor(data[c].author);
                         contributor.clearCommitment(project);
@@ -86,7 +89,6 @@ angular.module('myApp.leaderboard', ['ngRoute'])
 
 
                     $scope.leaderboard = contributorsLeaderboard.contributors();
-                    console.log($scope.leaderboard);
                 });
             }
 
