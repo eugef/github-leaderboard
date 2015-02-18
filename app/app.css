@@ -9,3 +9,7 @@
 .leaderboard .range-row {
     margin-bottom: 20px;
 }
+
+.leaderboard .icon-refresh {
+    font-weight: bold;
+}
