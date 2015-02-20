@@ -18,12 +18,6 @@ angular.module('myApp.controller.projects', ['ngRoute'])
             $scope.startWeek = null;
             $scope.endWeek = null;
 
-            $scope.greaterThan = function(prop, val){
-                return function(item){
-                    if (item[prop] > val) return true;
-                }
-            };
-
             $scope.refresh = function() {
                 $scope.updateLeaderboard(true);
             };
