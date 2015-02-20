@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.leaderboard', ['ngRoute'])
+angular.module('myApp.controller.leaderboard', ['ngRoute'])
 
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/leaderboard', {
