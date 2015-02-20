@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="myApp">
+<html lang="en" ng-app="myApp" ng-controller="MainCtrl">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,17 +14,17 @@
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Github Leaderboard</a>
+            <a class="navbar-brand" href="#/">GitHub Leaderboard</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="#/leaderboard">Contributors</a></li>
-                <li><a href="#/projects">Projects</a></li>
+                <li ng-class="{active: hasUrl('/leaderboard')}"><a href="#/leaderboard">Contributors</a></li>
+                <li  ng-class="{active: hasUrl('/projects')}"><a href="#/projects">Projects</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="https://github.com/eugef/github-leaderboard" target="_blank">Project on Github</a></li>
+                <li><a href="https://github.com/eugef/github-leaderboard" target="_blank">Project on GitHub</a></li>
             </ul>
         </div>
     </div>
@@ -50,6 +50,7 @@
 <script src="components/models/contributors-leaderboard.js"></script>
 <script src="components/models/project.js"></script>
 <script src="components/models/projects-leaderboard.js"></script>
+<script src="main/main.js"></script>
 <script src="leaderboard/leaderboard.js"></script>
 <script src="projects/projects.js"></script>
 </body>
