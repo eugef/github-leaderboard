@@ -21,12 +21,12 @@
     </div>
     <div class="row" ng-repeat="project in leaderboard | orderObjectBy:'totalPoints':true | filter:greaterThan('totalPoints', 0)">
         <div class="col-md-1">{{ $index+1 }}</div>
-        <div class="col-md-4"><h3>{{ project.name }}</h3></div>
+        <div class="col-md-5"><h3>{{ project.name }}</h3></div>
         <div class="col-md-1"><h3>{{ project.totalPoints }}</h3></div>
-        <div class="col-md-6">
+        <div class="col-md-5">
             <ul>
                 <li ng-repeat="points in project.points | orderObjectBy:'points':true | filter:greaterThan('points', 0) | limitTo:3">
-                    {{ points.contributor }}: <strong>{{ points.points }}</strong>
+                    {{ points.contributor }}: <span class="label label-default">{{ points.points }}</span>
                 </li>
             </ul>
         </div>
