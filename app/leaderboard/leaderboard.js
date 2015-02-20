@@ -41,8 +41,13 @@ angular.module('myApp.controller.leaderboard', ['ngRoute'])
 
             $scope.updateLeaderboard = function(forceUpdate) {
                 forceUpdate = forceUpdate || false;
+
+                var startWeek = startOfTheWeek($scope.weeksOffset);
+                $scope.startWeek = startWeek * 1000;
+                $scope.endWeek = endOfTheWeek() * 1000;
+
                 for (var i = 0; i < config.projects.length; i++) {
-                    loadProjectContributors(config.projects[i], $scope.weeksOffset, forceUpdate);
+                    loadProjectContributors(config.projects[i], startWeek, forceUpdate);
                 }
             };
 
@@ -58,36 +63,9 @@ angular.module('myApp.controller.leaderboard', ['ngRoute'])
                 return offsetDay(6);
             }
 
-            function loadProjectContributors(project, weeksOffset, forceUpdate) {
-                var startWeek = startOfTheWeek(weeksOffset);
-                var endWeek = endOfTheWeek();
-                $scope.startWeek = startWeek * 1000;
-                $scope.endWeek = endWeek * 1000;
-
-                Github.contributors(project, forceUpdate).then(function(data) {
-                    for (var c = 0; c < data.length; c++) {
-                        var contributor = contributorsLeaderboard.contributor(data[c].author);
-                        contributor.clearCommitment(project);
-
-                        if (data[c].weeks) {
-                            var weekData = data[c].weeks;
-                            for (var w = weekData.length - 1; w >= 0; w--) {
-                                if (weekData[w].w >= startWeek) {
-                                    contributor.addCommitment(project, weekData[w].w, {
-                                        add: weekData[w].a,
-                                        delete: weekData[w].d,
-                                        commit: weekData[w].c
-                                    });
-                                } else {
-                                    break;
-                                }
-                            }
-                        }
-                        
-                        contributor.calculatePoints(project);
-                    }
-
-
+            function loadProjectContributors(projectName, startWeek, forceUpdate) {
+                Github.contributors(projectName, forceUpdate).then(function(data) {
+                    contributorsLeaderboard.populateContributor(projectName, data, startWeek);
                     $scope.leaderboard = contributorsLeaderboard.contributors();
                 });
             }
