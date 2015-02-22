@@ -1,15 +1,15 @@
 'use strict';
 
-angular.module('myApp.controller.leaderboard', ['ngRoute'])
+angular.module('myApp.controller.contributors', ['ngRoute'])
 
     .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/leaderboard', {
-            templateUrl: 'leaderboard/leaderboard.html',
-            controller: 'LeaderboardCtrl'
+        $routeProvider.when('/contributors', {
+            templateUrl: 'contributors/contributors.html',
+            controller: 'ContributorsCtrl'
         });
     }])
 
-    .controller('LeaderboardCtrl', ['$scope', 'Github', 'config', 'ContributorsLeaderboardModel',
+    .controller('ContributorsCtrl', ['$scope', 'Github', 'config', 'ContributorsLeaderboardModel',
         function ($scope, Github, config, ContributorsLeaderboard) {
             var contributorsLeaderboard = new ContributorsLeaderboard();
 

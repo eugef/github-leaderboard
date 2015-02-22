@@ -13,10 +13,10 @@ angular.module('myApp', [
     'myApp.model.project',
     'myApp.model.projectsLeaderboard',
     'myApp.controller.main',
-    'myApp.controller.leaderboard',
+    'myApp.controller.contributors',
     'myApp.controller.projects'
 ]).
 
     config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.otherwise({redirectTo: '/leaderboard'});
+        $routeProvider.otherwise({redirectTo: '/contributors'});
     }]);
