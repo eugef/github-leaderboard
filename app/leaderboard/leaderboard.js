@@ -40,6 +40,8 @@ angular.module('myApp.controller.leaderboard', ['ngRoute'])
                 $scope.startWeek = startWeek * 1000;
                 $scope.endWeek = endOfTheWeek() * 1000;
 
+                $scope.$parent.progress.current = 0;
+                
                 for (var i = 0; i < config.projects.length; i++) {
                     loadProjectContributors(config.projects[i], startWeek, forceUpdate);
                 }
@@ -61,6 +63,8 @@ angular.module('myApp.controller.leaderboard', ['ngRoute'])
                 Github.contributors(projectName, forceUpdate).then(function(data) {
                     contributorsLeaderboard.populateContributor(projectName, data, startWeek);
                     $scope.leaderboard = contributorsLeaderboard.contributors();
+                }).finally(function(){
+                    $scope.$parent.progress.current ++;
                 });
             }
 

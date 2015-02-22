@@ -2,8 +2,13 @@
 
 angular.module('myApp.controller.main', [])
 
-    .controller('MainCtrl', ['$scope', '$location',
-        function ($scope, $location) {
+    .controller('MainCtrl', ['$scope', '$location', 'config',
+        function ($scope, $location, config) {
+            $scope.progress = {
+                total: config.projects.length,
+                current: 0
+            };
+
             $scope.hasUrl = function(url) {
                 return url == $location.url();
             };
