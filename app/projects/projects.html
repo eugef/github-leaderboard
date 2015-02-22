@@ -21,7 +21,7 @@
     </div>
     <div class="row" ng-repeat="project in leaderboard | orderObjectBy:'totalPoints':true | filter:greaterThan('totalPoints', 0)">
         <div class="col-md-1">{{ $index+1 }}</div>
-        <div class="col-md-1"><img src ng-src="http://robohash.org/{{ project.name }}" class="avatar img-circle"></div>
+        <div class="col-md-1"><img src ng-src="http://robohash.org/{{ project.name | md5 }}" class="avatar img-circle"></div>
         <div class="col-md-5"><h3>{{ project.name }}</h3></div>
         <div class="col-md-1"><h3>{{ project.totalPoints }}</h3></div>
         <div class="col-md-4">

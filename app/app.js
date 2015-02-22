@@ -6,6 +6,7 @@ angular.module('myApp', [
     'ngOrderObjectBy',
     'ui.bootstrap',
     'angular-data.DSCacheFactory',
+    'angular-md5',
     'myApp.config',
     'myApp.github',
     'myApp.model.contributor',
