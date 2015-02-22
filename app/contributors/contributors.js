@@ -48,7 +48,7 @@ angular.module('myApp.controller.contributors', ['ngRoute'])
             };
 
             function offsetDay(offset) {
-                return moment().day(offset).hour(0).minute(0).second(0).utcOffset(0).format('X');
+                return moment().utcOffset(0).day(offset).hour(0).minute(0).second(0).format('X');
             }
             
             function startOfTheWeek(weekOffset) {
