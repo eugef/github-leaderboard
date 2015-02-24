@@ -1,4 +1,4 @@
-angular.module('myApp.github', []).factory('Github', ['$q', '$http', 'DSCacheFactory', 'config',
+angular.module('myApp.service.github', []).factory('Github', ['$q', '$http', 'DSCacheFactory', 'config',
     function ($q, $http, DSCacheFactory, config) {
         "use strict";
 

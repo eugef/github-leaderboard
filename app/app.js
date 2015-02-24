@@ -8,11 +8,10 @@ angular.module('myApp', [
     'angular-data.DSCacheFactory',
     'angular-md5',
     'myApp.config',
-    'myApp.github',
+    'myApp.service.github',
+    'myApp.service.leaderboard',
     'myApp.model.contributor',
-    'myApp.model.contributorsLeaderboard',
     'myApp.model.project',
-    'myApp.model.projectsLeaderboard',
     'myApp.controller.main',
     'myApp.controller.contributors',
     'myApp.controller.projects'

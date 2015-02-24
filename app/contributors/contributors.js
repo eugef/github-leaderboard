@@ -9,10 +9,8 @@ angular.module('myApp.controller.contributors', ['ngRoute'])
         });
     }])
 
-    .controller('ContributorsCtrl', ['$scope', 'Github', 'config', 'ContributorsLeaderboardModel',
-        function ($scope, Github, config, ContributorsLeaderboard) {
-            var contributorsLeaderboard = new ContributorsLeaderboard();
-
+    .controller('ContributorsCtrl', ['$scope', 'Github', 'config', 'Leaderboard',
+        function ($scope, Github, config, Leaderboard) {
             $scope.leaderboard = {};
             $scope.weeksOffset = 1;
             $scope.startWeek = null;
@@ -61,8 +59,8 @@ angular.module('myApp.controller.contributors', ['ngRoute'])
 
             function loadProjectContributors(projectName, startWeek, forceUpdate) {
                 Github.contributors(projectName, forceUpdate).then(function(data) {
-                    contributorsLeaderboard.populateContributor(projectName, data, startWeek);
-                    $scope.leaderboard = contributorsLeaderboard.contributors();
+                    Leaderboard.populateProject(projectName, data, startWeek);
+                    $scope.leaderboard = Leaderboard.contributors();
                 }).finally(function(){
                     $scope.$parent.progress.current ++;
                 });
