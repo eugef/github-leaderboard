@@ -3,7 +3,7 @@
 }
 
 .leaderboard .avatar {
-    height: 48px;
+    height: 60px;
 }
 
 .leaderboard .range-row {
@@ -12,6 +12,18 @@
 
 .leaderboard .icon-refresh {
     font-weight: bold;
+}
+
+.leaderboard ul {
+    margin: 0;
+}
+
+.leaderboard h3 {
+    margin-top: 18px;
+}
+
+.leaderboard .panel {
+    margin-bottom: 2px;
 }
 
 .header .progress {
