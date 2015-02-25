@@ -1,8 +1,7 @@
 'use strict';
 
-angular.module('myApp.model.project', [])
-    .factory('ProjectModel', ['config',
-        function (config) {
+angular.module('myApp.model.project', []).factory('ProjectModel', ['CommitmentModel',
+        function (Commitment) {
 
             /**
              * @constructor
@@ -17,12 +16,7 @@ angular.module('myApp.model.project', [])
                 this.name = name;
 
                 /**
-                 * @typedef {Object} Commitment
-                 * @property {Number} add
-                 * @property {Number} delete
-                 * @property {Number} commit
-                 *
-                 * @type {Commitment[]}
+                 * @type {Object.<String, Object.<Number, Commitment>>}
                  */
                 this.commitments = {};
 
@@ -35,16 +29,6 @@ angular.module('myApp.model.project', [])
                  * @type {Number}
                  */
                 this.totalPoints = 0;
-
-                /**
-                 * Calculates commitment points based on amount of commits, additions anddeletions
-                 * @param {Commitment} commitment
-                 */
-                var commitmentPoints = function(commitment) {
-                    return commitment.commit +
-                        Math.floor(commitment.add / config.commitment_average_add) +
-                        Math.floor(commitment.delete / config.commitment_average_delete);
-                };
 
                 this.calculateTotalPoints = function() {
                     this.totalPoints = 0;
@@ -64,7 +48,7 @@ angular.module('myApp.model.project', [])
                     };
 
                     for (var week in this.commitments[contributor]) {
-                        this.points[contributor].points += commitmentPoints(this.commitments[contributor][week]);
+                        this.points[contributor].points += this.commitments[contributor][week].points();
                     }
 
                     this.calculateTotalPoints();

@@ -10,6 +10,7 @@ angular.module('myApp', [
     'myApp.config',
     'myApp.service.github',
     'myApp.service.leaderboard',
+    'myApp.model.commitment',
     'myApp.model.contributor',
     'myApp.model.project',
     'myApp.controller.main',

@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('myApp.service.leaderboard', []).factory('Leaderboard', ['ProjectModel', 'ContributorModel',
-    function (Project, Contributor) {
+angular.module('myApp.service.leaderboard', []).factory('Leaderboard', ['ProjectModel', 'ContributorModel', 'CommitmentModel',
+    function (Project, Contributor, Commitment) {
 
         /**
          * @constructor
@@ -60,17 +60,17 @@ angular.module('myApp.service.leaderboard', []).factory('Leaderboard', ['Project
 
                         for (var w = weekData.length - 1; w >= 0; w--) {
                             if (weekData[w].w >= startWeek) {
-                                project.addCommitment(contributor.profile.login, weekData[w].w, {
-                                    add: weekData[w].a,
-                                    delete: weekData[w].d,
-                                    commit: weekData[w].c
-                                });
+                                project.addCommitment(contributor.profile.login, weekData[w].w, new Commitment(
+                                    weekData[w].c,
+                                    weekData[w].a,
+                                    weekData[w].d
+                                ));
 
-                                contributor.addCommitment(projectName, weekData[w].w, {
-                                    add: weekData[w].a,
-                                    delete: weekData[w].d,
-                                    commit: weekData[w].c
-                                });
+                                contributor.addCommitment(projectName, weekData[w].w, new Commitment(
+                                    weekData[w].c,
+                                    weekData[w].a,
+                                    weekData[w].d
+                                ));
                             } else {
                                 break;
                             }
