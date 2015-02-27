@@ -1,24 +1,4 @@
 <div class="leaderboard">
-    <div class="row range-row">
-        <div class="col-md-1">
-            <ul class="nav nav-pills">
-                <li><a href ng-click="refresh()" class="icon-refresh" title="Refresh">&#8635;</a></li>
-            </ul>
-        </div>
-        <div class="col-md-3">
-            <h4>{{ startWeek | date:'dd MMM yyyy' }} - {{ endWeek | date:'dd MMM yyyy' }}</h4>
-        </div>
-        <div class="col-md-8">
-            <ul class="nav nav-pills">
-                <li ng-class="{active: isRange(0)}"><a href ng-click="setRange(0)">This week</a></li>
-                <li ng-class="{active: isRange(1)}"><a href ng-click="setRange(1)">2 weeks</a></li>
-                <li ng-class="{active: isRange(3)}"><a href ng-click="setRange(3)">1 month</a></li>
-                <li ng-class="{active: isRange(12)}"><a href ng-click="setRange(12)">3 months</a></li>
-                <li ng-class="{active: isRange(25)}"><a href ng-click="setRange(25)">6 months</a></li>
-                <li ng-class="{active: isRange(51)}"><a href ng-click="setRange(51)">1 year</a></li>
-            </ul>
-        </div>
-    </div>
     <div class="panel panel-default" ng-repeat="contributor in leaderboard | orderObjectBy:'totalPoints':true | filter:greaterThan('totalPoints', 0)">
         <div class="panel-body">
             <div class="col-md-1"><h3>{{ $index+1 }}</h3></div>

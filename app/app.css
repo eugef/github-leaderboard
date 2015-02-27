@@ -2,6 +2,10 @@
     cursor: pointer;
 }
 
+.toolbar {
+    margin-bottom: 18px;
+}
+
 .leaderboard .avatar {
     height: 60px;
 }
