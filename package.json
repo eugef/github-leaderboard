@@ -1,8 +1,7 @@
 {
   "name": "github-leaderboard",
-  "private": true,
-  "version": "0.0.0",
-  "description": "Github Leaderboard",
+  "version": "0.1.0",
+  "description": "GitHub Leaderboard for the projects and contributors",
   "repository": "https://github.com/eugef/github-leaderboard",
   "license": "MIT",
   "devDependencies": {
