@@ -1,0 +1,91 @@
+#!/usr/bin/env node
+
+var colors = require('colors'),
+    argv = require('optimist').argv,
+    http = require('http'),
+    httpProxy = require('http-proxy'),
+    portfinder = require('portfinder'),
+    url = require('url'),
+    minimatch = require('minimatch'),
+    config = require('./github-proxy.config.js');
+
+if (argv.h || argv.help) {
+    console.log([
+        "usage: github-proxy [options]",
+        "",
+        "config is loaded from github-proxy.config.js file",
+        "",
+        "options:",
+        "  -p                 Port to use [8080]",
+        "  -a                 Address to use [0.0.0.0]",
+        "  -s --silent        Suppress log messages from output",
+        "  -h --help          Print this list and exit."
+    ].join('\n'));
+    process.exit();
+}
+
+var port = argv.p || parseInt(process.env.PORT, 10),
+    host = argv.a || '0.0.0.0',
+    log = (argv.s || argv.silent) ? (function () {}) : console.log,
+    requestLogger;
+
+if (!argv.s && !argv.silent) {
+    requestLogger = function(req) {
+        log('[%s] "%s %s" "%s"', (new Date).toUTCString(), req.method.cyan, req.url.cyan, req.headers['host'], req.headers['user-agent']);
+    }
+}
+
+if (!port) {
+    portfinder.basePort = 8080;
+    portfinder.getPort(function (err, port) {
+        if (err) throw err;
+        listen(port);
+    });
+} else {
+    listen(port);
+}
+
+function listen(port) {
+    var isUrlAllowed = function(url) {
+        for (var i = 0; i < config.allowed_urls.length; i++) {
+            if (minimatch(url, config.allowed_urls[i])) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+
+    var proxy = httpProxy.createProxyServer({});
+
+    var server = http.createServer(function(req, res) {
+        requestLogger(req);
+
+        if (!isUrlAllowed(req.url)) {
+            res.writeHead(403, { 'Content-Type': 'text/plain' });
+            res.write('Access denied for url ' + req.url);
+            res.end();
+        } else {
+            req.headers.host = url.parse(config.github.api_uri).host;
+            req.headers.accept = 'application/vnd.github.v3+json';
+            req.headers.authorization = 'token ' + config.github.auth_token;
+
+            proxy.web(req, res, { target: config.github.api_uri });
+        }
+
+    }).listen(port, host, function() {
+        log('Starting up github-proxy on '.yellow + host.toString().cyan + ':'.cyan + port.toString().cyan);
+        log('Hit CTRL-C to stop the server');
+    });
+}
+
+if (process.platform !== 'win32') {
+    //
+    // Signal handlers don't work on Windows.
+    //
+    process.on('SIGINT', function () {
+        log('github-proxy stopped.'.red);
+        process.exit();
+    });
+}
+

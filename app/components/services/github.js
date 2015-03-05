@@ -1,10 +1,11 @@
-angular.module('myApp.service.github', []).factory('Github', ['$q', '$http', 'DSCacheFactory', 'config',
-    function ($q, $http, DSCacheFactory, config) {
+angular.module('myApp.service.github', []).factory('Github', ['$q', '$http', '$location', 'DSCacheFactory', 'config',
+    function ($q, $http, $location, DSCacheFactory, config) {
         "use strict";
 
         /**
          * @constructor
          * @param {Array} config
+         * @param {String} config.api_uri
          * @param {String} config.auth_token
          */
         function GithubAPI(config) {
@@ -12,7 +13,7 @@ angular.module('myApp.service.github', []).factory('Github', ['$q', '$http', 'DS
             /**
              * @type {String}
              */
-            var apiUri = 'https://api.github.com';
+            var apiUri = config.api_uri.replace('://localhost:', '://' + $location.host() + ':');
 
             /**
              * @type {Number}
@@ -80,6 +81,6 @@ angular.module('myApp.service.github', []).factory('Github', ['$q', '$http', 'DS
             };
         }
 
-        return new GithubAPI(config);
+        return new GithubAPI(config.github);
     }
 ]);
