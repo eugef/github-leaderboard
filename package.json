@@ -1,10 +1,10 @@
 {
   "name": "github-leaderboard",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "GitHub Leaderboard for the projects and contributors",
   "repository": "https://github.com/eugef/github-leaderboard",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "bower": "^1.3.1",
     "http-server": "^0.6.1",
     "http-proxy": "~1.8.1",
