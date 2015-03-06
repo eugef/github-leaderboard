@@ -26,6 +26,17 @@
     margin-top: 18px;
 }
 
+.leaderboard a {
+    color: #C8C8C8;
+    border-bottom: 1px solid transparent;
+}
+
+.leaderboard a:hover {
+    text-decoration: none;
+    border-bottom: 1px dashed #C8C8C8;
+}
+
+
 .leaderboard .panel {
     margin-bottom: 2px;
 }

@@ -2,8 +2,8 @@
 
 angular.module('myApp.controller.main', [])
 
-    .controller('MainCtrl', ['$scope', '$location', 'config',
-        function ($scope, $location, config) {
+    .controller('MainCtrl', ['$scope', '$location', 'Github', 'config', 'Leaderboard',
+        function ($scope, $location, Github, config, Leaderboard) {
             $scope.progress = {
                 total: config.projects.length,
                 current: 0
@@ -24,6 +24,25 @@ angular.module('myApp.controller.main', [])
                 return offsetDay(6);
             }
 
+            function updateLeaderboard(forceUpdate) {
+                forceUpdate = forceUpdate || false;
+
+                $scope.progress.current = 0;
+
+                for (var i = 0; i < config.projects.length; i++) {
+                    loadProjectContributors(config.projects[i], $scope.startWeek, forceUpdate);
+                }
+            }
+
+            function loadProjectContributors(projectName, startWeek, forceUpdate) {
+                Github.contributors(projectName, forceUpdate).then(function(data) {
+                    Leaderboard.populateProject(projectName, data, startWeek);
+                    $scope.$broadcast('leaderboardUpdated');
+                }).finally(function(){
+                    $scope.progress.current ++;
+                });
+            }
+
             $scope.isRange = function(weeksOffset) {
                 return $scope.weeksOffset == weeksOffset;
             };
@@ -34,12 +53,12 @@ angular.module('myApp.controller.main', [])
                     $scope.startWeek = startOfTheWeek(weeksOffset);
                     $scope.endWeek = endOfTheWeek();
 
-                    $scope.$broadcast('setRange');
+                    updateLeaderboard();
                 }
             };
 
             $scope.refresh = function() {
-                $scope.$broadcast('refresh');
+                updateLeaderboard(true);
             };
 
             $scope.hasUrl = function(url) {

@@ -14,8 +14,9 @@ angular.module('myApp', [
     'myApp.model.contributor',
     'myApp.model.project',
     'myApp.controller.main',
-    'myApp.controller.contributors',
-    'myApp.controller.projects'
+    'myApp.controller.contributors.leaderboard',
+    'myApp.controller.projects.leaderboard',
+    'myApp.controller.projects.project'
 ]).
 
     config(['$routeProvider', function ($routeProvider) {
