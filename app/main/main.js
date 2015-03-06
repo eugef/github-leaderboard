@@ -61,8 +61,8 @@ angular.module('myApp.controller.main', [])
                 updateLeaderboard(true);
             };
 
-            $scope.hasUrl = function(url) {
-                return url == $location.url();
+            $scope.inUrl = function(url) {
+                return $location.url().indexOf(url) !== -1;
             };
 
             $scope.greaterThan = function(prop, val){
