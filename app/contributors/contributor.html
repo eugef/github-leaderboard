@@ -18,7 +18,9 @@
             <div class="col-md-5"><h3><a href ng-href="#/projects/{{ project.project }}">{{ project.project.split('/')[1] }}</a></h3></div>
             <div class="col-md-1"><h3>{{ project.points }}</h3></div>
             <div class="col-md-4 vertical-center">
-
+                <progressbar value="project.points / contributor.totalPoints * 100">
+                    <span ng-hide="project.points / contributor.totalPoints < 0.05">{{ (project.points / contributor.totalPoints) * 100 | number:0 }}%</span></bar>
+                </progressbar>
             </div>
         </div>
     </div>

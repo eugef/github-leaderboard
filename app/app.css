@@ -58,6 +58,12 @@
     align-items: center;
 }
 
+.leaderboard .progress {
+    background-color: #272B30;
+    width: 100%;
+    margin-bottom: 0;
+}
+
 .header .progress {
     height: 2px;
     margin-top: -20px;
