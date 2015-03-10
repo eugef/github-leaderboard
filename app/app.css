@@ -10,6 +10,7 @@
     height: 60px;
 }
 
+.contributor .avatar-big,
 .project .avatar-big {
     height: 154px;
 }
@@ -32,7 +33,7 @@
 
 .leaderboard a {
     color: #C8C8C8;
-    border-bottom: 1px solid transparent;
+    border-bottom: 1px dashed #4E5358
 }
 
 .leaderboard a:hover {
@@ -45,6 +46,7 @@
     margin-bottom: 2px;
 }
 
+.contributor .img-circle,
 .leaderboard .img-circle,
 .project .img-circle {
     background-color: #272B30;

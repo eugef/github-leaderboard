@@ -8,7 +8,7 @@
             <div class="col-md-4 vertical-center">
                 <ul>
                     <li ng-repeat="points in project.points | orderObjectBy:'points':true | filter:greaterThan('points', 0) | limitTo:3">
-                        {{ points.contributor }} <span class="label label-default">{{ points.points }}</span>
+                        <a href ng-href="#/contributors/{{ points.contributor }}">{{ points.contributor }}</a> <span class="label label-default">{{ points.points }}</span>
                     </li>
                 </ul>
             </div>

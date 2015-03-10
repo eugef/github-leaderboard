@@ -1,0 +1,25 @@
+<div class="contributor">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="col-md-2"><img src ng-src="{{ contributor.profile.avatar_url }}" class="avatar-big img-circle"></div>
+            <div class="col-md-5"><h3>{{ contributor.profile.login }}</h3></div>
+            <div class="col-md-1"><h3>{{ contributor.totalPoints }}</h3></div>
+            <div class="col-md-4 vertical-center">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="leaderboard">
+    <div class="panel panel-default" ng-repeat="project in contributor.points | orderObjectBy:'points':true | filter:greaterThan('points', 0)">
+        <div class="panel-body">
+            <div class="col-md-1"><h3>{{ $index+1 }}</h3></div>
+            <div class="col-md-1"><img src ng-src="http://robohash.org/{{ project.project | md5 }}" class="avatar img-circle"></div>
+            <div class="col-md-5"><h3><a href ng-href="#/projects/{{ project.project }}">{{ project.project.split('/')[1] }}</a></h3></div>
+            <div class="col-md-1"><h3>{{ project.points }}</h3></div>
+            <div class="col-md-4 vertical-center">
+
+            </div>
+        </div>
+    </div>
+</div>

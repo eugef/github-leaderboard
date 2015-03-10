@@ -15,6 +15,7 @@ angular.module('myApp', [
     'myApp.model.project',
     'myApp.controller.main',
     'myApp.controller.contributors.leaderboard',
+    'myApp.controller.contributors.contributor',
     'myApp.controller.projects.leaderboard',
     'myApp.controller.projects.project'
 ]).

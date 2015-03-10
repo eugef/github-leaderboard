@@ -2,8 +2,9 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="col-md-2"><img src ng-src="http://robohash.org/{{ project.name | md5 }}" class="avatar-big img-circle"></div>
-            <div class="col-md-5"><h3>{{ project.name }}</a></h3></div>
-            <div class="col-md-5 vertical-center">
+            <div class="col-md-5"><h3>{{ project.name.split('/')[1] }}</h3></div>
+            <div class="col-md-1"><h3>{{ project.totalPoints }}</h3></div>
+            <div class="col-md-4 vertical-center">
 
             </div>
         </div>
@@ -14,7 +15,7 @@
         <div class="panel-body">
             <div class="col-md-1"><h3>{{ $index+1 }}</h3></div>
             <div class="col-md-1"><img src ng-src="{{ contributors[contributor.contributor].profile.avatar_url }}" class="avatar img-circle"></div>
-            <div class="col-md-5"><h3>{{ contributor.contributor }}</h3></div>
+            <div class="col-md-5"><h3><a href ng-href="#/contributors/{{ contributor.contributor }}">{{ contributor.contributor }}</a></h3></div>
             <div class="col-md-1"><h3>{{ contributor.points }}</h3></div>
             <div class="col-md-4 vertical-center">
 
