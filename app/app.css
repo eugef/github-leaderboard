@@ -10,6 +10,10 @@
     height: 60px;
 }
 
+.project .avatar-big {
+    height: 154px;
+}
+
 .leaderboard .range-row {
     margin-bottom: 20px;
 }
@@ -41,7 +45,8 @@
     margin-bottom: 2px;
 }
 
-.leaderboard .img-circle {
+.leaderboard .img-circle,
+.project .img-circle {
     background-color: #272B30;
 }
 

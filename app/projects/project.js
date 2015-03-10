@@ -12,6 +12,7 @@ angular.module('myApp.controller.projects.project', ['ngRoute'])
     .controller('ProjectsProjectCtrl', ['$scope', '$routeParams', 'Github', 'config', 'Leaderboard',
         function ($scope, $routeParams, Github, config, Leaderboard) {
             $scope.name = $routeParams.user + '/' + $routeParams.project;
+
             $scope.project = Leaderboard.projects()[$scope.name];
             $scope.contributors = Leaderboard.contributors();
 
