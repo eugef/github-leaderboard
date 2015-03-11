@@ -31,15 +31,23 @@ angular.module('myApp.model.contributor', []).factory('ContributorModel', ['Comm
             this.points = {};
 
             /**
-             * @type {Number}
+             * @type {Object.<String, Number>}
              */
-            this.totalPoints = 0;
+            this.total = {};
 
-            this.calculateTotalPoints = function () {
-                this.totalPoints = 0;
+            this.calculateTotal = function () {
+                this.total = {
+                    points: 0,
+                    commits: 0,
+                    additions: 0,
+                    deletions: 0
+                };
 
-                for (var project in this.commitments) {
-                    this.totalPoints += this.points[project].points;
+                for (var project in this.points) {
+                    this.total.points += this.points[project].points;
+                    this.total.commits += this.points[project].commits;
+                    this.total.additions += this.points[project].additions;
+                    this.total.deletions += this.points[project].deletions;
                 }
             };
 
@@ -49,14 +57,20 @@ angular.module('myApp.model.contributor', []).factory('ContributorModel', ['Comm
             this.calculatePoints = function (project) {
                 this.points[project] = {
                     project: project,
-                    points: 0
+                    points: 0,
+                    commits: 0,
+                    additions: 0,
+                    deletions: 0
                 };
 
                 for (var week in this.commitments[project]) {
                     this.points[project].points += this.commitments[project][week].points();
+                    this.points[project].commits += this.commitments[project][week].commits;
+                    this.points[project].additions += this.commitments[project][week].additions;
+                    this.points[project].deletions += this.commitments[project][week].deletions;
                 }
 
-                this.calculateTotalPoints();
+                this.calculateTotal();
             };
 
             /**

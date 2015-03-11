@@ -3,9 +3,13 @@
         <div class="panel-body">
             <div class="col-md-2"><img src ng-src="{{ contributor.profile.avatar_url }}" class="avatar-big img-circle"></div>
             <div class="col-md-5"><h3>{{ contributor.profile.login }}</h3></div>
-            <div class="col-md-1"><h3>{{ contributor.totalPoints }}</h3></div>
-            <div class="col-md-4 vertical-center">
-
+            <div class="col-md-1"><h3>{{ contributor.total.points }}</h3></div>
+            <div class="col-md-4">
+                <ul>
+                    <li>commits: <span class="label label-info">{{ contributor.total.commits }}</span></li>
+                    <li>additions: <span class="label label-success">{{ contributor.total.additions }}</span></li>
+                    <li>deletions: <span class="label label-danger">{{ contributor.total.deletions }}</span></li>
+                </ul>
             </div>
         </div>
     </div>
@@ -18,8 +22,8 @@
             <div class="col-md-5"><h3><a href ng-href="#/projects/{{ project.project }}">{{ project.project.split('/')[1] }}</a></h3></div>
             <div class="col-md-1"><h3>{{ project.points }}</h3></div>
             <div class="col-md-4 vertical-center">
-                <progressbar value="project.points / contributor.totalPoints * 100">
-                    <span ng-hide="project.points / contributor.totalPoints < 0.05">{{ (project.points / contributor.totalPoints) * 100 | number:0 }}%</span></bar>
+                <progressbar value="project.points / contributor.total.points * 100">
+                    <span ng-hide="project.points / contributor.total.points < 0.05">{{ (project.points / contributor.total.points) * 100 | number:0 }}%</span></bar>
                 </progressbar>
             </div>
         </div>

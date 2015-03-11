@@ -70,9 +70,12 @@ angular.module('myApp.controller.main', [])
                 return $location.url().indexOf(url) !== -1;
             };
 
-            $scope.greaterThan = function(prop, val){
+            $scope.greaterThan = function(field, value){
+                function index(obj, i) {
+                    return obj[i];
+                }
                 return function(item){
-                    if (item[prop] > val) return true;
+                    return field.split('.').reduce(index, item) > value;
                 }
             };
 

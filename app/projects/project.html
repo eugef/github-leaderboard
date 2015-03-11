@@ -3,9 +3,13 @@
         <div class="panel-body">
             <div class="col-md-2"><img src ng-src="http://robohash.org/{{ project.name | md5 }}" class="avatar-big img-circle"></div>
             <div class="col-md-5"><h3>{{ project.name.split('/')[1] }}</h3></div>
-            <div class="col-md-1"><h3>{{ project.totalPoints }}</h3></div>
-            <div class="col-md-4 vertical-center">
-
+            <div class="col-md-1"><h3>{{ project.total.points }}</h3></div>
+            <div class="col-md-4">
+                <ul>
+                    <li>commits: <span class="label label-info">{{ project.total.commits }}</span></li>
+                    <li>additions: <span class="label label-success">{{ project.total.additions }}</span></li>
+                    <li>deletions: <span class="label label-danger">{{ project.total.deletions }}</span></li>
+                </ul>
             </div>
         </div>
     </div>
@@ -18,8 +22,8 @@
             <div class="col-md-5"><h3><a href ng-href="#/contributors/{{ contributor.contributor }}">{{ contributor.contributor }}</a></h3></div>
             <div class="col-md-1"><h3>{{ contributor.points }}</h3></div>
             <div class="col-md-4 vertical-center">
-                <progressbar value="contributor.points / project.totalPoints * 100">
-                    <span ng-hide="contributor.points / project.totalPoints < 0.05">{{ (contributor.points / project.totalPoints) * 100 | number:0 }}%</span></bar>
+                <progressbar value="contributor.points / project.total.points * 100">
+                    <span ng-hide="contributor.points / project.total.points < 0.05">{{ (contributor.points / project.total.points) * 100 | number:0 }}%</span></bar>
                 </progressbar>
             </div>
         </div>

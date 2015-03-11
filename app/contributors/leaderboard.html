@@ -1,10 +1,10 @@
 <div class="leaderboard">
-    <div class="panel panel-default" ng-repeat="contributor in leaderboard | orderObjectBy:'totalPoints':true | filter:greaterThan('totalPoints', 0)">
+    <div class="panel panel-default" ng-repeat="contributor in leaderboard | orderObjectBy:'total.points':true | filter:greaterThan('total.points', 0)">
         <div class="panel-body">
             <div class="col-md-1"><h3>{{ $index+1 }}</h3></div>
             <div class="col-md-1"><img src ng-src="{{ contributor.profile.avatar_url }}" class="avatar img-circle"></div>
             <div class="col-md-5"><h3><a href ng-href="#/contributors/{{ contributor.profile.login }}">{{ contributor.profile.login }}</a></h3></div>
-            <div class="col-md-1"><h3>{{ contributor.totalPoints }}</h3></div>
+            <div class="col-md-1"><h3>{{ contributor.total.points }}</h3></div>
             <div class="col-md-4 vertical-center">
                 <ul>
                     <li ng-repeat="points in contributor.points | orderObjectBy:'points':true | filter:greaterThan('points', 0) | limitTo:3">
