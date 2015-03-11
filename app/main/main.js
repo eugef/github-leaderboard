@@ -50,7 +50,12 @@ angular.module('myApp.controller.main', [])
             $scope.setRange = function(weeksOffset) {
                 if ($scope.weeksOffset != weeksOffset) {
                     $scope.weeksOffset = weeksOffset;
-                    $scope.startWeek = startOfTheWeek(weeksOffset);
+
+                    if (weeksOffset == -1) {
+                        $scope.startWeek = 0
+                    } else {
+                        $scope.startWeek = startOfTheWeek(weeksOffset);
+                    }
                     $scope.endWeek = endOfTheWeek();
 
                     updateLeaderboard();
