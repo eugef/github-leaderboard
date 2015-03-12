@@ -2,15 +2,18 @@
 
 angular.module('myApp.controller.main', [])
 
-    .controller('MainCtrl', ['$scope', '$location', 'Github', 'config', 'Leaderboard',
-        function ($scope, $location, Github, config, Leaderboard) {
+    .controller('MainCtrl', ['$scope', '$location', '$interval', 'Github', 'config', 'Leaderboard',
+        function ($scope, $location, $interval, Github, config, Leaderboard) {
             $scope.progress = {
                 total: config.projects.length,
                 current: 0
             };
+            $scope.refreshRate = 0;
             $scope.weeksOffset = null;
             $scope.startWeek = null;
             $scope.endWeek = null;
+
+            var refreshPromise = null;
 
             function offsetDay(offset) {
                 return moment().utcOffset(0).day(offset).hour(0).minute(0).second(0).format('X');
@@ -59,6 +62,23 @@ angular.module('myApp.controller.main', [])
                     $scope.endWeek = endOfTheWeek();
 
                     updateLeaderboard();
+                }
+            };
+
+            $scope.isRefresh = function(refreshRate) {
+                return $scope.refreshRate == refreshRate;
+            };
+
+            $scope.setRefresh = function(refreshRate) {
+                if ($scope.refreshRate != refreshRate) {
+                    $scope.refreshRate = refreshRate;
+                    if (refreshPromise) {
+                        $interval.cancel(refreshPromise);
+                    }
+                    if (refreshRate) {
+                        refreshPromise = $interval($scope.refresh, refreshRate * 60 * 1000);
+                        console.log(refreshPromise);
+                    }
                 }
             };
 

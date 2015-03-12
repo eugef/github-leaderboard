@@ -37,19 +37,19 @@
         <div class="row range-row">
             <div class="col-md-1">
                 <div class="btn-group" dropdown>
-                    <button type="button" ng-click="refresh()" class="btn btn-default icon-refresh">&#8635;</button>
-                    <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
+                    <button type="button" ng-click="refresh()" class="btn btn-default icon-refresh" ng-class="{'btn-primary': !isRefresh(0)}">&#8635;</button>
+                    <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle ng-class="{'btn-primary': !isRefresh(0)}">
                         <span class="caret"></span>
                         <span class="sr-only">Split button!</span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li class="dropdown-header">Auto-Refresh</li>
-                        <li class="active"><a href>Off</a></li>
+                        <li ng-class="{active: isRefresh(0)}"><a href ng-click="setRefresh(0)">Off</a></li>
                         <li class="divider"></li>
-                        <li><a href>Every 5m</a></li>
-                        <li><a href>Every 10m</a></li>
-                        <li><a href>Every 30m</a></li>
-                        <li><a href>Every 1h</a></li>
+                        <li ng-class="{active: isRefresh(5)}"><a href ng-click="setRefresh(5)">Every 5m</a></li>
+                        <li ng-class="{active: isRefresh(10)}"><a href ng-click="setRefresh(10)">Every 10m</a></li>
+                        <li ng-class="{active: isRefresh(30)}"><a href ng-click="setRefresh(30)">Every 30m</a></li>
+                        <li ng-class="{active: isRefresh(60)}"><a href ng-click="setRefresh(60)">Every 1h</a></li>
                     </ul>
                 </div>
             </div>
