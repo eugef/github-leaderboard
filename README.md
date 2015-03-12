@@ -1,6 +1,6 @@
 # Github Leaderboard
 
-[![npm version](https://badge.fury.io/js/github-leaderboard.svg)](http://badge.fury.io/js/github-leaderboard)
+[![npm version](https://badge.fury.io/js/github-leaderboard.svg)](https://www.npmjs.com/package/github-leaderboard)
 
 Grabs Github contribution statistics for bunch of projects and presents it in a few nice leaderboards.
 
