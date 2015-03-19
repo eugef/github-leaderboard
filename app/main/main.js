@@ -12,6 +12,7 @@ angular.module('myApp.controller.main', [])
             $scope.weeksOffset = null;
             $scope.startWeek = null;
             $scope.endWeek = null;
+            $scope.sortItem = 'points';
 
             var refreshPromise = null;
 
@@ -80,6 +81,20 @@ angular.module('myApp.controller.main', [])
                         console.log(refreshPromise);
                     }
                 }
+            };
+
+            $scope.isSortItem = function(sortItem) {
+                return $scope.sortItem == sortItem;
+            };
+
+            $scope.setSortItem = function(sortItem) {
+                if ($scope.sortItem != sortItem) {
+                    $scope.sortItem = sortItem;
+                }
+            };
+
+            $scope.getSortItem = function() {
+                return $scope.sortItem
             };
 
             $scope.refresh = function() {

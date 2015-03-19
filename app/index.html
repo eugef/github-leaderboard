@@ -37,10 +37,9 @@
         <div class="row range-row">
             <div class="col-md-1">
                 <div class="btn-group" dropdown>
-                    <button type="button" ng-click="refresh()" class="btn btn-default icon-refresh" ng-class="{'btn-primary': !isRefresh(0)}">&#8635;</button>
+                    <button type="button" ng-click="refresh()" class="btn btn-default icon-refresh" ng-class="{'btn-primary': !isRefresh(0)}" title="Refresh">&#8635;</button>
                     <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle ng-class="{'btn-primary': !isRefresh(0)}">
                         <span class="caret"></span>
-                        <span class="sr-only">Split button!</span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li class="dropdown-header">Auto-Refresh</li>
@@ -54,9 +53,9 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <h4>{{ startWeek*1000 | date:'dd MMM yyyy' }} - {{ endWeek*1000 | date:'dd MMM yyyy' }}</h4>
+                <h4 ng-cloak>{{ startWeek*1000 | date:'dd MMM yyyy' }} - {{ endWeek*1000 | date:'dd MMM yyyy' }}</h4>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-7">
                 <div class="btn-group">
                     <button type="button" ng-click="setRange(0)" class="btn btn-default" ng-class="{active: isRange(0)}">1 week</button>
                     <button type="button" ng-click="setRange(1)" class="btn btn-default" ng-class="{active: isRange(1)}">2 weeks</button>
@@ -65,6 +64,21 @@
                     <button type="button" ng-click="setRange(25)" class="btn btn-default" ng-class="{active: isRange(25)}">6 months</button>
                     <button type="button" ng-click="setRange(51)" class="btn btn-default" ng-class="{active: isRange(51)}">1 year</button>
                     <button type="button" ng-click="setRange(-1)" class="btn btn-default" ng-class="{active: isRange(-1)}">All time</button>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="btn-group pull-right" dropdown>
+                    <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle ng-class="{'btn-primary': !isRefresh(0)}" ng-cloak>
+                        {{ getSortItem() }}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li ng-class="{active: isSortItem('points')}"><a href ng-click="setSortItem('points')">points</a></li>
+                        <li class="divider"></li>
+                        <li ng-class="{active: isSortItem('commits')}"><a href ng-click="setSortItem('commits')">commits</a></li>
+                        <li ng-class="{active: isSortItem('additions')}"><a href ng-click="setSortItem('additions')">additions</a></li>
+                        <li ng-class="{active: isSortItem('deletions')}"><a href ng-click="setSortItem('deletions')">deletions</a></li>
+                    </ul>
                 </div>
             </div>
         </div>

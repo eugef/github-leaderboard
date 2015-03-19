@@ -14,25 +14,25 @@
         </div>
     </div>
 </div>
-<div class="leaderboard" ng-if="project.total.points">
-    <div class="panel panel-default" ng-repeat="contributor in project.points | orderObjectBy:'points':true  | filter:greaterThan('points', 0)">
+<div class="leaderboard" ng-if="project.total[$parent.sortItem]">
+    <div class="panel panel-default" ng-repeat="contributor in project.points | orderObjectBy:$parent.sortItem:true  | filter:greaterThan($parent.sortItem, 0)">
         <div class="panel-body">
             <div class="col-md-1"><h3>{{ $index+1 }}</h3></div>
             <div class="col-md-1"><img src ng-src="{{ contributors[contributor.contributor].profile.avatar_url }}" class="avatar img-circle"></div>
             <div class="col-md-5"><h3><a href ng-href="#/contributors/{{ contributor.contributor }}">{{ contributor.contributor }}</a></h3></div>
-            <div class="col-md-1"><h3>{{ contributor.points }}</h3></div>
+            <div class="col-md-1"><h3>{{ contributor[$parent.sortItem] }}</h3></div>
             <div class="col-md-4 vertical-center">
-                <progressbar value="contributor.points / project.total.points * 100">
-                    <span ng-hide="contributor.points / project.total.points < 0.05">{{ (contributor.points / project.total.points) * 100 | number:0 }}%</span></bar>
+                <progressbar value="contributor[$parent.sortItem] / project.total[$parent.sortItem] * 100" type="{{ {points:'', commits:'info', additions:'success', deletions:'danger'}[$parent.sortItem] }}">
+                    <span ng-hide="contributor[$parent.sortItem] / project.total[$parent.sortItem] < 0.05">{{ (contributor[$parent.sortItem] / project.total[$parent.sortItem]) * 100 | number:0 }}%</span>
                 </progressbar>
             </div>
         </div>
     </div>
 </div>
-<div ng-if="!project.total.points">
+<div ng-if="!project.total[$parent.sortItem]">
     <div class="panel panel-default">
-        <div class="panel-body">
-            Oops, no commitments for the selected period!
+        <div class="panel-body" ng-cloak>
+            Oops, no {{ $parent.sortItem }} found for the selected period!
         </div>
     </div>
 </div>
