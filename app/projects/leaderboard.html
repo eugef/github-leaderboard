@@ -1,18 +1,26 @@
 <div class="leaderboard">
-    <div class="panel panel-default" ng-repeat="project in leaderboard | orderObjectBy:'total.points':true | filter:greaterThan('total.points', 0)">
+    <div class="panel panel-default" ng-repeat="project in leaderboard | orderObjectBy:'total.'+$parent.sortItem:true | filter:greaterThan('total.'+$parent.sortItem, 0)">
         <div class="panel-body">
-            <div class="col-md-1"><h3>{{ $index+1 }}</h3></div>
-            <div class="col-md-1"><img src ng-src="http://robohash.org/{{ project.name | md5 }}" class="avatar img-circle"></div>
-            <div class="col-md-5"><h3><a href ng-href="#/projects/{{ project.name }}">{{ project.name.split('/')[1] }}</a></h3></div>
-            <div class="col-md-1"><h3>{{ project.total.points }}</h3></div>
+            <div class="col-md-1">
+                <h3>{{ $index+1 }}</h3>
+            </div>
+            <div class="col-md-1">
+                <img src ng-src="http://robohash.org/{{ project.name | md5 }}" class="avatar img-circle">
+            </div>
+            <div class="col-md-5">
+                <h3><a href ng-href="#/projects/{{ project.name }}">{{ project.name.split('/')[1] }}</a></h3>
+            </div>
+            <div class="col-md-1">
+                <h3>{{ project.total[$parent.sortItem] }}</h3>
+            </div>
             <div class="col-md-4 vertical-center">
                 <ul>
-                    <li ng-repeat="points in project.points | orderObjectBy:'points':true | filter:greaterThan('points', 0) | limitTo:3">
-                        <a href ng-href="#/contributors/{{ points.contributor }}">{{ points.contributor }}</a> <span class="label label-default">{{ points.points }}</span>
+                    <li ng-repeat="points in project.points | orderObjectBy:$parent.sortItem:true | filter:greaterThan($parent.sortItem, 0) | limitTo:3">
+                        <a href ng-href="#/contributors/{{ points.contributor }}">{{ points.contributor }}</a>
+                        <span class="label label-default">{{ points[$parent.sortItem] }}</span>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
-
