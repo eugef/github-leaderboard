@@ -93,8 +93,15 @@ angular.module('myApp.controller.main', [])
                 }
             };
 
-            $scope.getSortItem = function() {
-                return $scope.sortItem
+            $scope.sortItemStyle = function() {
+                var styles = {
+                    points: 'default',
+                    commits: 'info',
+                    additions: 'success',
+                    deletions: 'danger'
+                };
+
+                return styles[$scope.sortItem];
             };
 
             $scope.refresh = function() {

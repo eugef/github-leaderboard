@@ -7,6 +7,7 @@ angular.module('myApp', [
     'ui.bootstrap',
     'angular-data.DSCacheFactory',
     'angular-md5',
+    'angular-capitalize-filter',
     'myApp.config',
     'myApp.service.github',
     'myApp.service.leaderboard',

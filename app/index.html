@@ -68,16 +68,16 @@
             </div>
             <div class="col-md-1">
                 <div class="btn-group pull-right" dropdown>
-                    <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle ng-class="{'btn-primary': !isRefresh(0)}" ng-cloak>
-                        {{ getSortItem() }}
+                    <button type="button" class="btn btn-default dropdown-toggle btn-{{ sortItemStyle() }}" dropdown-toggle ng-cloak>
+                        <span>{{ sortItem | capitalize }}</span>
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li ng-class="{active: isSortItem('points')}"><a href ng-click="setSortItem('points')">points</a></li>
+                        <li ng-class="{active: isSortItem('points')}"><a href ng-click="setSortItem('points')">Points</a></li>
                         <li class="divider"></li>
-                        <li ng-class="{active: isSortItem('commits')}"><a href ng-click="setSortItem('commits')">commits</a></li>
-                        <li ng-class="{active: isSortItem('additions')}"><a href ng-click="setSortItem('additions')">additions</a></li>
-                        <li ng-class="{active: isSortItem('deletions')}"><a href ng-click="setSortItem('deletions')">deletions</a></li>
+                        <li ng-class="{active: isSortItem('commits')}" class="text-info"><a href ng-click="setSortItem('commits')">Commits</a></li>
+                        <li ng-class="{active: isSortItem('additions')}"><a href ng-click="setSortItem('additions')">Additions</a></li>
+                        <li ng-class="{active: isSortItem('deletions')}"><a href ng-click="setSortItem('deletions')">Deletions</a></li>
                     </ul>
                 </div>
             </div>
@@ -97,8 +97,8 @@
 <script src="bower_components/angular-order-object-by/src/ng-order-object-by.js"></script>
 <script src="bower_components/angular-cache/dist/angular-cache.js"></script>
 <script src="bower_components/angular-md5/angular-md5.js"></script>
+<script src="bower_components/angular-capitalize-filter/capitalize.js"></script>
 <script src="bower_components/moment/moment.js"></script>
-<script src="bower_components/minimatch/minimatch.js"></script>
 
 <script src="app.js"></script>
 <script src="config.js"></script>
