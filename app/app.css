@@ -6,6 +6,10 @@
     margin-bottom: 18px;
 }
 
+.toolbar h4.date-range {
+    text-align: center;
+}
+
 .leaderboard .avatar {
     height: 60px;
 }

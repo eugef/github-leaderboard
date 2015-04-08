@@ -35,27 +35,26 @@
 <div class="toolbar">
     <div class="container">
         <div class="row range-row">
-            <div class="col-md-1">
-                <div class="btn-group" dropdown>
-                    <button type="button" ng-click="refresh()" class="btn btn-default icon-refresh" ng-class="{'btn-primary': !isRefresh(0)}" title="Refresh">&#8635;</button>
-                    <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle ng-class="{'btn-primary': !isRefresh(0)}">
+            <div class="col-md-2">
+                <div class="btn-group btn-block" dropdown>
+                    <button type="button" class="btn btn-block dropdown-toggle btn-{{ sortItemStyle() }}" dropdown-toggle>
+                        <span ng-cloak>{{ sortItem | capitalize }}</span>
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li class="dropdown-header">Auto-Refresh</li>
-                        <li ng-class="{active: isRefresh(0)}"><a href ng-click="setRefresh(0)">Off</a></li>
+                        <li class="dropdown-header">Show leaderboard for</li>
+                        <li ng-class="{active: isSortItem('points')}"><a href ng-click="setSortItem('points')"><strong>Points</strong></a></li>
                         <li class="divider"></li>
-                        <li ng-class="{active: isRefresh(5)}"><a href ng-click="setRefresh(5)">Every 5m</a></li>
-                        <li ng-class="{active: isRefresh(10)}"><a href ng-click="setRefresh(10)">Every 10m</a></li>
-                        <li ng-class="{active: isRefresh(30)}"><a href ng-click="setRefresh(30)">Every 30m</a></li>
-                        <li ng-class="{active: isRefresh(60)}"><a href ng-click="setRefresh(60)">Every 1h</a></li>
+                        <li ng-class="{active: isSortItem('commits')}" class="text-info"><a href ng-click="setSortItem('commits')">Commits</a></li>
+                        <li ng-class="{active: isSortItem('additions')}"><a href ng-click="setSortItem('additions')">Additions</a></li>
+                        <li ng-class="{active: isSortItem('deletions')}"><a href ng-click="setSortItem('deletions')">Deletions</a></li>
                     </ul>
                 </div>
             </div>
             <div class="col-md-3">
-                <h4 ng-cloak>{{ startWeek*1000 | date:'dd MMM yyyy' }} - {{ endWeek*1000 | date:'dd MMM yyyy' }}</h4>
+                <h4 class="date-range" ng-cloak>{{ startWeek*1000 | date:'dd MMM yyyy' }} - {{ endWeek*1000 | date:'dd MMM yyyy' }}</h4>
             </div>
-            <div class="col-md-7">
+            <div class="col-md-6">
                 <div class="btn-group">
                     <button type="button" ng-click="setRange(0)" class="btn btn-default" ng-class="{active: isRange(0)}">1 week</button>
                     <button type="button" ng-click="setRange(1)" class="btn btn-default" ng-class="{active: isRange(1)}">2 weeks</button>
@@ -68,16 +67,18 @@
             </div>
             <div class="col-md-1">
                 <div class="btn-group pull-right" dropdown>
-                    <button type="button" class="btn btn-default dropdown-toggle btn-{{ sortItemStyle() }}" dropdown-toggle ng-cloak>
-                        <span>{{ sortItem | capitalize }}</span>
+                    <button type="button" ng-click="refresh()" class="btn btn-default icon-refresh" ng-class="{'btn-primary': !isRefresh(0)}" title="Refresh">&#8635;</button>
+                    <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle ng-class="{'btn-primary': !isRefresh(0)}">
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li ng-class="{active: isSortItem('points')}"><a href ng-click="setSortItem('points')">Points</a></li>
+                        <li class="dropdown-header">Auto-Refresh</li>
+                        <li ng-class="{active: isRefresh(0)}"><a href ng-click="setRefresh(0)">Off</a></li>
                         <li class="divider"></li>
-                        <li ng-class="{active: isSortItem('commits')}" class="text-info"><a href ng-click="setSortItem('commits')">Commits</a></li>
-                        <li ng-class="{active: isSortItem('additions')}"><a href ng-click="setSortItem('additions')">Additions</a></li>
-                        <li ng-class="{active: isSortItem('deletions')}"><a href ng-click="setSortItem('deletions')">Deletions</a></li>
+                        <li ng-class="{active: isRefresh(5)}"><a href ng-click="setRefresh(5)">Every 5m</a></li>
+                        <li ng-class="{active: isRefresh(10)}"><a href ng-click="setRefresh(10)">Every 10m</a></li>
+                        <li ng-class="{active: isRefresh(30)}"><a href ng-click="setRefresh(30)">Every 30m</a></li>
+                        <li ng-class="{active: isRefresh(60)}"><a href ng-click="setRefresh(60)">Every 1h</a></li>
                     </ul>
                 </div>
             </div>
