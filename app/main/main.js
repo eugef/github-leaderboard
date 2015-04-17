@@ -31,6 +31,13 @@ angular.module('myApp.controller.main', [])
             function updateLeaderboard(forceUpdate) {
                 forceUpdate = forceUpdate || false;
 
+                if ($scope.weeksOffset == -1) {
+                    $scope.startWeek = 0
+                } else {
+                    $scope.startWeek = startOfTheWeek($scope.weeksOffset);
+                }
+                $scope.endWeek = endOfTheWeek();
+
                 $scope.progress.current = 0;
 
                 for (var i = 0; i < config.projects.length; i++) {
@@ -54,13 +61,6 @@ angular.module('myApp.controller.main', [])
             $scope.setRange = function(weeksOffset) {
                 if ($scope.weeksOffset != weeksOffset) {
                     $scope.weeksOffset = weeksOffset;
-
-                    if (weeksOffset == -1) {
-                        $scope.startWeek = 0
-                    } else {
-                        $scope.startWeek = startOfTheWeek(weeksOffset);
-                    }
-                    $scope.endWeek = endOfTheWeek();
 
                     updateLeaderboard();
                 }
