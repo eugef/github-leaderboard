@@ -64,6 +64,10 @@ angular.module('myApp.service.github', []).factory('Github', ['$q', '$http', '$l
                                 cache.put(project, response.data);
                                 request.resolve(response.data);
                             }
+                        },
+                        function (response) {
+                            console.log(project, 'error');
+                            request.resolve(response.data);
                         }
                     );
                 }
