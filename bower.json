@@ -9,15 +9,17 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "angular": "1.2.x",
-    "angular-route": "1.2.x",
-    "angular-loader": "1.2.x",
-    "angular-bootstrap": "~0.12",
-    "angular-order-object-by": "~1.1.0",
-    "moment": "~2.9.0",
-    "bootswatch-slate": "https://raw.githubusercontent.com/thomaspark/bootswatch/v3.3.2/slate/bootstrap.css",
-    "angular-cache": "~3.2.5",
-    "angular-md5": "~0.1.7",
-    "angular-capitalize-filter": "~2.0.0"
+    "angular": "~1.4",
+    "angular-route": "~1.4",
+    "angular-bootstrap": "~0.14",
+    "angular-order-object-by": "~1.2",
+    "moment": "~2.10",
+    "bootswatch-slate": "https://raw.githubusercontent.com/thomaspark/bootswatch/v3.3.5/slate/bootstrap.css",
+    "angular-cache": "~3.2",
+    "angular-md5": "~0.1",
+    "angular-capitalize-filter": "~2.0"
+  },
+  "resolutions": {
+    "angular": "~1.4"
   }
 }

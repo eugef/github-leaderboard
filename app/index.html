@@ -30,7 +30,7 @@
 </nav>
 <div class="header">
     <div class="container">
-        <progressbar value="progress.current" max="progress.total"></progressbar>
+        <div uib-progressbar value="progress.current" max="progress.total"></div>
     </div>
 </div>
 
@@ -38,8 +38,8 @@
     <div class="container">
         <div class="row range-row">
             <div class="col-md-2">
-                <div class="btn-group btn-block" dropdown>
-                    <button type="button" class="btn btn-block dropdown-toggle btn-{{ sortItemStyle() }}" dropdown-toggle>
+                <div class="btn-group btn-block" uib-dropdown>
+                    <button type="button" class="btn btn-block dropdown-toggle btn-{{ sortItemStyle() }}" uib-dropdown-toggle>
                         <span ng-cloak>{{ sortItem | capitalize }}</span>
                         <span class="caret"></span>
                     </button>
@@ -68,9 +68,9 @@
                 </div>
             </div>
             <div class="col-md-1">
-                <div class="btn-group pull-right" dropdown>
+                <div class="btn-group pull-right" uib-dropdown>
                     <button type="button" ng-click="refresh()" class="btn btn-default icon-refresh" ng-class="{'btn-primary': !isRefresh(0)}" title="Refresh">&#8635;</button>
-                    <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle ng-class="{'btn-primary': !isRefresh(0)}">
+                    <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle ng-class="{'btn-primary': !isRefresh(0)}">
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
