@@ -2,7 +2,6 @@
 
 angular.module('myApp.model.commitment', []).factory('CommitmentModel', ['config',
     function (config) {
-
         /**
          * @constructor
          *
@@ -11,7 +10,6 @@ angular.module('myApp.model.commitment', []).factory('CommitmentModel', ['config
          * @param {Number} deletions
          */
         function Commitment(commits, additions, deletions) {
-
             /**
              * @type {Number}
              */
@@ -26,13 +24,16 @@ angular.module('myApp.model.commitment', []).factory('CommitmentModel', ['config
              * @type {Number}
              */
             this.deletions = deletions;
-
-            this.points = function () {
-                return this.commits +
-                    Math.floor(this.additions / config.commitment_average_add) +
-                    Math.floor(this.deletions / config.commitment_average_delete);
-            };
         }
+
+        /**
+         * @returns {Number}
+         */
+        Commitment.prototype.points = function () {
+            return this.commits +
+                Math.floor(this.additions / config.commitment_average_add) +
+                Math.floor(this.deletions / config.commitment_average_delete);
+        };
 
         return Commitment;
     }
