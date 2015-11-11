@@ -1,23 +1,23 @@
 <div class="leaderboard">
-    <div class="panel panel-default" ng-repeat="contributor in leaderboard | orderObjectBy:'total.'+$parent.sortItem:true | filter:greaterThan('total.'+$parent.sortItem, 0)">
+    <div class="panel panel-default" ng-repeat="contributor in contributorsLeaderboard.data | orderObjectBy:('total.'+main.sortItem):true | filter:main.greaterThan('total.'+main.sortItem, 0)">
         <div class="panel-body">
             <div class="col-md-1">
-                <h3>{{ $index+1 }}</h3>
+                <h3 ng-bind="$index+1"></h3>
             </div>
             <div class="col-md-1">
                 <img src ng-src="{{ contributor.profile.avatar_url }}" class="avatar img-circle">
             </div>
             <div class="col-md-5">
-                <h3><a href ng-href="#/contributors/{{ contributor.profile.login }}">{{ contributor.profile.login }}</a></h3>
+                <h3><a href ng-href="#/contributors/{{ contributor.profile.login }}" ng-bind="contributor.profile.login"></a></h3>
             </div>
             <div class="col-md-1">
-                <h3>{{ contributor.total[$parent.sortItem] }}</h3>
+                <h3 ng-bind="contributor.total[main.sortItem]"></h3>
             </div>
             <div class="col-md-4 vertical-center">
                 <ul>
-                    <li ng-repeat="points in contributor.points | orderObjectBy:$parent.sortItem:true | filter:greaterThan($parent.sortItem, 0) | limitTo:3">
-                        <a href ng-href="#/projects/{{ points.project }}">{{ points.project.split('/')[1] }}</a>
-                        <span class="label label-default">{{ points[$parent.sortItem] }}</span>
+                    <li ng-repeat="points in contributor.points | orderObjectBy:main.sortItem:true | filter:main.greaterThan(main.sortItem, 0) | limitTo:3">
+                        <a href ng-href="#/projects/{{ points.project }}" ng-bind="points.project.split('/')[1]"></a>
+                        <span class="label label-default" ng-bind="points[main.sortItem]"></span>
                     </li>
                 </ul>
             </div>

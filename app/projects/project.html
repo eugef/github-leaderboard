@@ -1,38 +1,40 @@
 <div class="project">
     <div class="panel panel-default">
         <div class="panel-body">
-            <div class="col-md-2"><img src ng-src="http://robohash.org/{{ project.name | md5 }}" class="avatar-big img-circle"></div>
-            <div class="col-md-5"><h3>{{ project.name.split('/')[1] }}</h3></div>
-            <div class="col-md-1"><h3>{{ project.total.points }}</h3></div>
+            <div class="col-md-2"><img src ng-src="http://robohash.org/{{ project.data.name | md5 }}" class="avatar-big img-circle"></div>
+            <div class="col-md-5"><h3 ng-bind="project.data.name.split('/')[1]"></h3></div>
+            <div class="col-md-1"><h3 ng-bind="project.data.total.points"></h3></div>
             <div class="col-md-4">
                 <ul>
-                    <li>commits: <span class="label label-info">{{ project.total.commits }}</span></li>
-                    <li>additions: <span class="label label-success">{{ project.total.additions }}</span></li>
-                    <li>deletions: <span class="label label-danger">{{ project.total.deletions }}</span></li>
+                    <li>commits: <span class="label label-info" ng-bind="project.data.total.commits"></span></li>
+                    <li>additions: <span class="label label-success" ng-bind="project.data.total.additions"></span></li>
+                    <li>deletions: <span class="label label-danger" ng-bind="project.data.total.deletions"></span></li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
-<div class="leaderboard" ng-if="project.total[$parent.sortItem]">
-    <div class="panel panel-default" ng-repeat="contributor in project.points | orderObjectBy:$parent.sortItem:true  | filter:greaterThan($parent.sortItem, 0)">
+<div class="leaderboard" ng-if="project.data.total[main.sortItem]">
+    <div class="panel panel-default" ng-repeat="contributor in project.data.points | orderObjectBy:main.sortItem:true | filter:main.greaterThan(main.sortItem, 0)">
         <div class="panel-body">
-            <div class="col-md-1"><h3>{{ $index+1 }}</h3></div>
-            <div class="col-md-1"><img src ng-src="{{ contributors[contributor.contributor].profile.avatar_url }}" class="avatar img-circle"></div>
-            <div class="col-md-5"><h3><a href ng-href="#/contributors/{{ contributor.contributor }}">{{ contributor.contributor }}</a></h3></div>
-            <div class="col-md-1"><h3>{{ contributor[$parent.sortItem] }}</h3></div>
+            <div class="col-md-1"><h3 ng-bind="$index+1"></h3></div>
+            <div class="col-md-1"><img src ng-src="{{ project.contributors[contributor.contributor].profile.avatar_url }}" class="avatar img-circle"></div>
+            <div class="col-md-5"><h3><a href ng-href="#/contributors/{{ contributor.contributor }}" ng-bind="contributor.contributor"></a></h3></div>
+            <div class="col-md-1"><h3 ng-bind="contributor[main.sortItem]"></h3></div>
             <div class="col-md-4 vertical-center">
-                <div uib-progressbar value="contributor[$parent.sortItem] / project.total[$parent.sortItem] * 100" type="{{ $parent.sortItemStyle() }}">
-                    <span ng-hide="$parent.percent < 5">{{ $parent.percent | number:0 }}%</span>
+                <div uib-progressbar value="contributor[main.sortItem] / project.data.total[main.sortItem] * 100" type="{{ main.sortItemStyle() }}">
+                    <span ng-hide="$parent.percent < 5">
+                        <span ng-bind="$parent.percent | number:0"></span>%
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div ng-if="!project.total[$parent.sortItem]">
+<div ng-if="!project.data.total[main.sortItem]">
     <div class="panel panel-default">
         <div class="panel-body" ng-cloak>
-            Oops, no {{ $parent.sortItem }} found for the selected period!
+            Oops, no <span ng-bind="main.sortItem"></span> found for the selected period!
         </div>
     </div>
 </div>

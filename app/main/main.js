@@ -4,96 +4,97 @@ angular.module('myApp.controller.main', [])
 
     .controller('MainCtrl', ['$scope', '$location', '$interval', 'Github', 'config', 'Leaderboard',
         function ($scope, $location, $interval, Github, config, Leaderboard) {
-            $scope.progress = {
+            this.progress = {
                 total: config.projects.length,
                 current: 0
             };
-            $scope.refreshRate = 0;
-            $scope.weeksOffset = null;
-            $scope.startWeek = null;
-            $scope.endWeek = null;
-            $scope.sortItem = 'points';
+            this.refreshRate = 0;
+            this.weeksOffset = null;
+            this.startWeek = null;
+            this.endWeek = null;
+            this.sortItem = 'points';
 
             var refreshPromise = null;
 
-            function offsetDay(offset) {
+            var offsetDay = function (offset) {
                 return moment().utcOffset(0).day(offset).hour(0).minute(0).second(0).format('X');
-            }
+            };
 
-            function startOfTheWeek(weekOffset) {
+            var startOfTheWeek = function (weekOffset) {
                 return offsetDay(-7 * weekOffset);
-            }
+            };
 
-            function endOfTheWeek() {
+            var endOfTheWeek = function () {
                 return offsetDay(6);
-            }
+            };
 
-            function updateLeaderboard(forceUpdate) {
+            this.updateLeaderboard = function (forceUpdate) {
                 forceUpdate = forceUpdate || false;
 
-                if ($scope.weeksOffset == -1) {
-                    $scope.startWeek = 0
+                if (this.weeksOffset == -1) {
+                    this.startWeek = 0
                 } else {
-                    $scope.startWeek = startOfTheWeek($scope.weeksOffset);
+                    this.startWeek = startOfTheWeek(this.weeksOffset);
                 }
-                $scope.endWeek = endOfTheWeek();
+                this.endWeek = endOfTheWeek();
 
-                $scope.progress.current = 0;
+                this.progress.current = 0;
 
                 for (var i = 0; i < config.projects.length; i++) {
-                    loadProjectContributors(config.projects[i], $scope.startWeek, forceUpdate);
+                    loadProjectContributors(config.projects[i], this.startWeek, forceUpdate)
+                        .finally(angular.bind(this, function () {
+                            this.progress.current++;
+                        })
+                    );
                 }
-            }
+            };
 
-            function loadProjectContributors(projectName, startWeek, forceUpdate) {
-                Github.contributors(projectName, forceUpdate).then(function(data) {
+            var loadProjectContributors = function (projectName, startWeek, forceUpdate) {
+                return Github.contributors(projectName, forceUpdate).then(function (data) {
                     Leaderboard.populateProject(projectName, data, startWeek);
                     $scope.$broadcast('leaderboardUpdated');
-                }).finally(function(){
-                    $scope.progress.current ++;
                 });
-            }
-
-            $scope.isRange = function(weeksOffset) {
-                return $scope.weeksOffset == weeksOffset;
             };
 
-            $scope.setRange = function(weeksOffset) {
-                if ($scope.weeksOffset != weeksOffset) {
-                    $scope.weeksOffset = weeksOffset;
+            this.isRange = function (weeksOffset) {
+                return this.weeksOffset == weeksOffset;
+            };
 
-                    updateLeaderboard();
+            this.setRange = function (weeksOffset) {
+                if (this.weeksOffset != weeksOffset) {
+                    this.weeksOffset = weeksOffset;
+
+                    this.updateLeaderboard();
                 }
             };
 
-            $scope.isRefresh = function(refreshRate) {
-                return $scope.refreshRate == refreshRate;
+            this.isRefresh = function (refreshRate) {
+                return this.refreshRate == refreshRate;
             };
 
-            $scope.setRefresh = function(refreshRate) {
-                if ($scope.refreshRate != refreshRate) {
-                    $scope.refreshRate = refreshRate;
+            this.setRefresh = function (refreshRate) {
+                if (this.refreshRate != refreshRate) {
+                    this.refreshRate = refreshRate;
                     if (refreshPromise) {
                         $interval.cancel(refreshPromise);
                     }
                     if (refreshRate) {
-                        refreshPromise = $interval($scope.refresh, refreshRate * 60 * 1000);
-                        console.log(refreshPromise);
+                        refreshPromise = $interval(this.refresh, refreshRate * 60 * 1000);
                     }
                 }
             };
 
-            $scope.isSortItem = function(sortItem) {
-                return $scope.sortItem == sortItem;
+            this.isSortItem = function (sortItem) {
+                return this.sortItem == sortItem;
             };
 
-            $scope.setSortItem = function(sortItem) {
-                if ($scope.sortItem != sortItem) {
-                    $scope.sortItem = sortItem;
+            this.setSortItem = function (sortItem) {
+                if (this.sortItem != sortItem) {
+                    this.sortItem = sortItem;
                 }
             };
 
-            $scope.sortItemStyle = function() {
+            this.sortItemStyle = function () {
                 var styles = {
                     points: 'default',
                     commits: 'info',
@@ -101,26 +102,27 @@ angular.module('myApp.controller.main', [])
                     deletions: 'danger'
                 };
 
-                return styles[$scope.sortItem];
+                return styles[this.sortItem];
             };
 
-            $scope.refresh = function() {
-                updateLeaderboard(true);
+            this.refresh = function () {
+                this.updateLeaderboard(true);
             };
 
-            $scope.inUrl = function(url) {
+            this.inUrl = function (url) {
                 return $location.url().indexOf(url) !== -1;
             };
 
-            $scope.greaterThan = function(field, value){
+            this.greaterThan = function (field, value) {
                 function index(obj, i) {
                     return obj[i];
                 }
-                return function(item){
+
+                return function (item) {
                     return field.split('.').reduce(index, item) > value;
                 }
             };
 
-            $scope.setRange(1);
+            this.setRange(1);
         }
     ]);

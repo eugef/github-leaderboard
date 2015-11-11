@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="myApp" ng-controller="MainCtrl">
+<html lang="en" ng-app="myApp" ng-controller="MainCtrl as main">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,8 +19,8 @@
 
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li ng-class="{active: inUrl('/contributors')}"><a href="#/contributors">Contributors</a></li>
-                <li ng-class="{active: inUrl('/projects')}"><a href="#/projects">Projects</a></li>
+                <li ng-class="{active: main.inUrl('/contributors')}"><a href="#/contributors">Contributors</a></li>
+                <li ng-class="{active: main.inUrl('/projects')}"><a href="#/projects">Projects</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="https://github.com/eugef/github-leaderboard" target="_blank">Project on GitHub</a></li>
@@ -30,7 +30,7 @@
 </nav>
 <div class="header">
     <div class="container">
-        <div uib-progressbar value="progress.current" max="progress.total"></div>
+        <div uib-progressbar value="main.progress.current" max="main.progress.total"></div>
     </div>
 </div>
 
@@ -39,48 +39,48 @@
         <div class="row range-row">
             <div class="col-md-2">
                 <div class="btn-group btn-block" uib-dropdown>
-                    <button type="button" class="btn btn-block dropdown-toggle btn-{{ sortItemStyle() }}" uib-dropdown-toggle>
-                        <span ng-cloak>{{ sortItem | capitalize }}</span>
+                    <button type="button" class="btn btn-block dropdown-toggle btn-{{ main.sortItemStyle() }}" uib-dropdown-toggle>
+                        <span ng-bind="main.sortItem | capitalize"></span>
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li class="dropdown-header">Show leaderboard for</li>
-                        <li ng-class="{active: isSortItem('points')}"><a href ng-click="setSortItem('points')"><strong>Points</strong></a></li>
+                        <li ng-class="{active: main.isSortItem('points')}"><a href ng-click="main.setSortItem('points')"><strong>Points</strong></a></li>
                         <li class="divider"></li>
-                        <li ng-class="{active: isSortItem('commits')}" class="text-info"><a href ng-click="setSortItem('commits')">Commits</a></li>
-                        <li ng-class="{active: isSortItem('additions')}"><a href ng-click="setSortItem('additions')">Additions</a></li>
-                        <li ng-class="{active: isSortItem('deletions')}"><a href ng-click="setSortItem('deletions')">Deletions</a></li>
+                        <li ng-class="{active: main.isSortItem('commits')}" class="text-info"><a href ng-click="main.setSortItem('commits')">Commits</a></li>
+                        <li ng-class="{active: main.isSortItem('additions')}"><a href ng-click="main.setSortItem('additions')">Additions</a></li>
+                        <li ng-class="{active: main.isSortItem('deletions')}"><a href ng-click="main.setSortItem('deletions')">Deletions</a></li>
                     </ul>
                 </div>
             </div>
             <div class="col-md-3">
-                <h4 class="date-range" ng-cloak>{{ startWeek*1000 | date:'dd MMM yyyy' }} - {{ endWeek*1000 | date:'dd MMM yyyy' }}</h4>
+                <h4 class="date-range"><span ng-bind="main.startWeek*1000 | date:'dd MMM yyyy'"></span> - <span ng-bind="main.endWeek*1000 | date:'dd MMM yyyy'"></span></h4>
             </div>
             <div class="col-md-6">
                 <div class="btn-group">
-                    <button type="button" ng-click="setRange(0)" class="btn btn-default" ng-class="{active: isRange(0)}">1 week</button>
-                    <button type="button" ng-click="setRange(1)" class="btn btn-default" ng-class="{active: isRange(1)}">2 weeks</button>
-                    <button type="button" ng-click="setRange(3)" class="btn btn-default" ng-class="{active: isRange(3)}">1 month</button>
-                    <button type="button" ng-click="setRange(12)" class="btn btn-default" ng-class="{active: isRange(12)}">3 months</button>
-                    <button type="button" ng-click="setRange(25)" class="btn btn-default" ng-class="{active: isRange(25)}">6 months</button>
-                    <button type="button" ng-click="setRange(51)" class="btn btn-default" ng-class="{active: isRange(51)}">1 year</button>
-                    <button type="button" ng-click="setRange(-1)" class="btn btn-default" ng-class="{active: isRange(-1)}">All time</button>
+                    <button type="button" ng-click="main.setRange(0)" class="btn btn-default" ng-class="{active: main.isRange(0)}">1 week</button>
+                    <button type="button" ng-click="main.setRange(1)" class="btn btn-default" ng-class="{active: main.isRange(1)}">2 weeks</button>
+                    <button type="button" ng-click="main.setRange(3)" class="btn btn-default" ng-class="{active: main.isRange(3)}">1 month</button>
+                    <button type="button" ng-click="main.setRange(12)" class="btn btn-default" ng-class="{active: main.isRange(12)}">3 months</button>
+                    <button type="button" ng-click="main.setRange(25)" class="btn btn-default" ng-class="{active: main.isRange(25)}">6 months</button>
+                    <button type="button" ng-click="main.setRange(51)" class="btn btn-default" ng-class="{active: main.isRange(51)}">1 year</button>
+                    <button type="button" ng-click="main.setRange(-1)" class="btn btn-default" ng-class="{active: main.isRange(-1)}">All time</button>
                 </div>
             </div>
             <div class="col-md-1">
                 <div class="btn-group pull-right" uib-dropdown>
-                    <button type="button" ng-click="refresh()" class="btn btn-default icon-refresh" ng-class="{'btn-primary': !isRefresh(0)}" title="Refresh">&#8635;</button>
-                    <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle ng-class="{'btn-primary': !isRefresh(0)}">
+                    <button type="button" ng-click="main.refresh()" class="btn btn-default icon-refresh" ng-class="{'btn-primary': !main.isRefresh(0)}" title="Refresh">&#8635;</button>
+                    <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle ng-class="{'btn-primary': !main.isRefresh(0)}">
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
                         <li class="dropdown-header">Auto-Refresh</li>
-                        <li ng-class="{active: isRefresh(0)}"><a href ng-click="setRefresh(0)">Off</a></li>
+                        <li ng-class="{active: main.isRefresh(0)}"><a href ng-click="main.setRefresh(0)">Off</a></li>
                         <li class="divider"></li>
-                        <li ng-class="{active: isRefresh(5)}"><a href ng-click="setRefresh(5)">Every 5m</a></li>
-                        <li ng-class="{active: isRefresh(10)}"><a href ng-click="setRefresh(10)">Every 10m</a></li>
-                        <li ng-class="{active: isRefresh(30)}"><a href ng-click="setRefresh(30)">Every 30m</a></li>
-                        <li ng-class="{active: isRefresh(60)}"><a href ng-click="setRefresh(60)">Every 1h</a></li>
+                        <li ng-class="{active: main.isRefresh(5)}"><a href ng-click="main.setRefresh(5)">Every 5m</a></li>
+                        <li ng-class="{active: main.isRefresh(10)}"><a href ng-click="main.setRefresh(10)">Every 10m</a></li>
+                        <li ng-class="{active: main.isRefresh(30)}"><a href ng-click="main.setRefresh(30)">Every 30m</a></li>
+                        <li ng-class="{active: main.isRefresh(60)}"><a href ng-click="main.setRefresh(60)">Every 1h</a></li>
                     </ul>
                 </div>
             </div>
