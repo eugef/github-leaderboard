@@ -10,14 +10,15 @@
   "private": true,
   "dependencies": {
     "angular": "~1.4",
-    "angular-route": "~1.4",
     "angular-bootstrap": "~0.14",
-    "angular-order-object-by": "~1.2",
-    "moment": "~2.10",
-    "bootswatch-slate": "https://raw.githubusercontent.com/thomaspark/bootswatch/v3.3.5/slate/bootstrap.css",
     "angular-cache": "~3.2",
+    "angular-capitalize-filter": "~2.0",
+    "angular-google-chart": "~0.0.11",
     "angular-md5": "~0.1",
-    "angular-capitalize-filter": "~2.0"
+    "angular-order-object-by": "~1.2",
+    "angular-route": "~1.4",
+    "bootswatch-slate": "https://raw.githubusercontent.com/thomaspark/bootswatch/v3.3.5/slate/bootstrap.css",
+    "moment": "~2.10"
   },
   "resolutions": {
     "angular": "~1.4"

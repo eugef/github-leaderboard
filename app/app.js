@@ -2,12 +2,13 @@
 
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
-    'ngRoute',
-    'ngOrderObjectBy',
-    'ui.bootstrap',
+    'angular-capitalize-filter',
     'angular-data.DSCacheFactory',
     'angular-md5',
-    'angular-capitalize-filter',
+    'googlechart',
+    'ngOrderObjectBy',
+    'ngRoute',
+    'ui.bootstrap',
     'myApp.config',
     'myApp.service.github',
     'myApp.service.leaderboard',
