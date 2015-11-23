@@ -35,6 +35,22 @@ angular.module('myApp.model.commitment', []).factory('CommitmentModel', ['config
                 Math.floor(this.deletions / config.commitment_average_delete);
         };
 
+        /**
+         * @param {Commitment} commitment
+         */
+        Commitment.prototype.add = function (commitment) {
+            this.commits += commitment.commits;
+            this.additions += commitment.additions;
+            this.deletions += commitment.deletions;
+        };
+
+        /**
+         * @returns {Commitment}
+         */
+        Commitment.create = function () {
+            return new Commitment(0, 0, 0);
+        };
+
         return Commitment;
     }
 ]);

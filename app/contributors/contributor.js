@@ -10,17 +10,17 @@ angular.module('myApp.controller.contributors.contributor', ['ngRoute'])
         });
     }])
 
-    .controller('ContributorsContributorCtrl', ['$scope', '$routeParams', 'Github', 'config', 'Leaderboard',
-        function ($scope, $routeParams, Github, config, Leaderboard) {
+    .controller('ContributorsContributorCtrl', ['$scope', '$routeParams', 'Github', 'config', 'Leaderboard', 'CommitmentModel',
+        function ($scope, $routeParams, Github, config, Leaderboard, Commitment) {
             var name = $routeParams.contributor;
 
             this.data = {};
-            this.chart = {
+            var chart = {
                 type: 'ColumnChart',
                 data: {
                     cols: [
                         {id: 'week', type: 'string'},
-                        {id: 'points', type: 'number'}
+                        {id: 'value', type: 'number'}
                     ],
                     rows: []
                 },
@@ -44,37 +44,68 @@ angular.module('myApp.controller.contributors.contributor', ['ngRoute'])
 
             var populateChart = function (commitments) {
                 var chartData = {};
-                var chartRows = [];
+                var chartRows = {
+                    'points': [],
+                    'commits': [],
+                    'additions': [],
+                    'deletions': []
+                };
+
+                /**
+                 * Populate row skipping leading empty weeks
+                 * @param {Number} week
+                 * @param {String} type
+                 * @param {Number} value
+                 */
+                var addChartRow = function (week, type, value) {
+                    if (chartRows[type].length || value) {
+                        chartRows[type].push({
+                            c: [
+                                {v: moment.unix(week).add(1, 'day').format('D MMM YY')},
+                                {v: value}
+                            ]
+                        })
+                    }
+                };
 
                 /* group commitments by week */
                 angular.forEach(commitments, function (weeks) {
                     angular.forEach(weeks, function (commitment, week) {
-                        chartData[week] = chartData[week] || {points: 0};
-                        chartData[week].points += commitment.points();
+                        chartData[week] = chartData[week] || Commitment.create();
+                        chartData[week].add(commitment);
                     })
                 });
 
-                /* populate rows skipping leading empty weeks*/
+                /* populate rows */
                 angular.forEach(chartData, angular.bind(this, function (data, week) {
-                    if (chartRows.length || data.points) {
-                        chartRows.push({
-                            c: [
-                                {v: moment.unix(week).add(1, 'day').format('D MMM YY')},
-                                {v: data.points}
-                            ]
-                        })
-                    }
+                    addChartRow(week, 'points', data.points());
+                    addChartRow(week, 'commits', data.commits);
+                    addChartRow(week, 'additions', data.additions);
+                    addChartRow(week, 'deletions', data.deletions);
                 }));
 
                 return chartRows;
             };
 
+            this.chart = function (sortItem) {
+                var chartColors = {
+                    points: '#7a8288',
+                    commits: '#5bc0de',
+                    additions: '#62c462',
+                    deletions: '#ee5f5b'
+                };
+
+                chart.data.rows = chart.data.rowsAll[sortItem];
+                chart.options.colors = [chartColors[sortItem]];
+                return chart;
+            };
+
             this.update = function () {
                 this.data = Leaderboard.contributors()[name];
 
-                this.chart.data.rows = [];
+                chart.data.rows = [];
                 if (this.data && this.data.commitments) {
-                    this.chart.data.rows = populateChart(this.data.commitments);
+                    chart.data.rowsAll = populateChart(this.data.commitments);
                 }
             };
 
