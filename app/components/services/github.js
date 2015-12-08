@@ -1,5 +1,5 @@
-angular.module('myApp.service.github', []).factory('Github', ['$q', '$http', '$location', 'DSCacheFactory', 'config',
-    function ($q, $http, $location, DSCacheFactory, config) {
+angular.module('myApp.service.github', []).factory('Github', ['$q', '$http', '$location', '$timeout', 'DSCacheFactory', 'config',
+    function ($q, $http, $location, $timeout, DSCacheFactory, config) {
         "use strict";
 
         /**
@@ -18,7 +18,7 @@ angular.module('myApp.service.github', []).factory('Github', ['$q', '$http', '$l
             /**
              * @type {Number}
              */
-            var retryTimeout = 1000;
+            var retryTimeout = 2000;
 
             /**
              * @type {DSCache}
@@ -53,12 +53,7 @@ angular.module('myApp.service.github', []).factory('Github', ['$q', '$http', '$l
                         function (response) {
                             if (response.status == '202') {
                                 console.log(project, 'retry in ' + retryTimeout);
-                                setTimeout(
-                                    function() {
-                                        doRequest();
-                                    },
-                                    retryTimeout
-                                )
+                                $timeout(doRequest, retryTimeout, false);
                             } else {
                                 console.log(project, 'return result');
                                 cache.put(project, response.data);
