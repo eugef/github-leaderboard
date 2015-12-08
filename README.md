@@ -4,6 +4,8 @@
 
 Grabs Github contribution statistics for bunch of projects and presents it in a few nice leaderboards.
 
+Works both with Github.com and GitHub Enterprise.
+
 ## Getting Started
 
 To get you started you can simply clone the repository and install the dependencies.
