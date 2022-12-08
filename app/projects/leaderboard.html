@@ -17,7 +17,7 @@
                 <ul>
                     <li ng-repeat="points in project.points | orderObjectBy:main.sortItem:true | filter:main.greaterThan(main.sortItem, 0) | limitTo:3">
                         <a href ng-href="#/contributors/{{ points.contributor }}" ng-bind="points.contributor"></a>
-                        <span class="label label-default" ng-bind="points[main.sortItem]"></span>
+                        <span class="label label-default">{{(points[main.sortItem] / project.total[main.sortItem] * 100) | number:0}}%</span>
                     </li>
                 </ul>
             </div>

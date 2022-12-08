@@ -5,7 +5,7 @@
                 <h3 ng-bind="$index+1"></h3>
             </div>
             <div class="col-md-1">
-                <img src ng-src="{{ contributor.profile.avatar_url }}" class="avatar img-circle">
+                <img src ng-src="//robohash.org/{{ contributor.profile.login | md5 }}?set=set5" class="avatar img-circle">
             </div>
             <div class="col-md-5">
                 <h3><a href ng-href="#/contributors/{{ contributor.profile.login }}" ng-bind="contributor.profile.login"></a></h3>
@@ -17,7 +17,7 @@
                 <ul>
                     <li ng-repeat="points in contributor.points | orderObjectBy:main.sortItem:true | filter:main.greaterThan(main.sortItem, 0) | limitTo:3">
                         <a href ng-href="#/projects/{{ points.project }}" ng-bind="points.project.split('/')[1]"></a>
-                        <span class="label label-default" ng-bind="points[main.sortItem]"></span>
+                        <span class="label label-default">{{(points[main.sortItem] / contributor.total[main.sortItem] * 100) | number:0}}%</span>
                     </li>
                 </ul>
             </div>

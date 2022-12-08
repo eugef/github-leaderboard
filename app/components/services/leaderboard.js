@@ -52,6 +52,10 @@ angular.module('myApp.service.leaderboard', []).factory('Leaderboard', ['Project
                 for (var c = 0; c < data.length; c++) {
                     var contributor = this.contributor(data[c].author);
 
+                    if (['dependabot[bot]', 'renovatebot[bot]', 'srv-hz-snyk'].includes(contributor.profile.login)) {
+                        continue
+                    }
+
                     contributor.clearCommitment(projectName);
                     project.clearCommitment(contributor.profile.login);
 

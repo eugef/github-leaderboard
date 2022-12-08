@@ -18,7 +18,7 @@
     <div class="panel panel-default" ng-repeat="contributor in project.data.points | orderObjectBy:main.sortItem:true | filter:main.greaterThan(main.sortItem, 0)">
         <div class="panel-body">
             <div class="col-md-1"><h3 ng-bind="$index+1"></h3></div>
-            <div class="col-md-1"><img src ng-src="{{ project.contributors[contributor.contributor].profile.avatar_url }}" class="avatar img-circle"></div>
+            <div class="col-md-1"><img src ng-src="//robohash.org/{{ project.contributors[contributor.contributor].profile.login | md5 }}?set=set5" class="avatar img-circle"></div>
             <div class="col-md-5"><h3><a href ng-href="#/contributors/{{ contributor.contributor }}" ng-bind="contributor.contributor"></a></h3></div>
             <div class="col-md-1"><h3 ng-bind="contributor[main.sortItem]"></h3></div>
             <div class="col-md-4 vertical-center">
